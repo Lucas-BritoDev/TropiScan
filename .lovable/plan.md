@@ -1,93 +1,130 @@
 
 
-# Plano: Implementar os 8 Itens Pendentes do PRD
+# Redesign Visual Completo - LeishCheck
 
-## 1. Termo de Consentimento (Seção 9.1 do PRD)
+Vou transformar o visual de todas as telas aplicando princípios modernos de UI/UX: glassmorphism sutil, gradientes refinados, micro-interações, tipografia com hierarquia clara, espaçamentos generosos e um visual premium de app de saúde.
 
-**Arquivo:** `src/pages/Consent.tsx`
+## Filosofia do Redesign
 
-Substituir o `CONSENT_TEXT` atual pelo texto exato da Seção 9.1 do PRD:
-- "Ao continuar, você concorda voluntariamente..."
-- Seções: OS DADOS UTILIZADOS INCLUEM, FINALIDADE, PRIVACIDADE E SEGURANÇA, SEUS DIREITOS, DECLARAÇÃO, IMPORTANTE
+- **Gradientes sutis** no background em vez de cor chapada
+- **Glassmorphism** nos cards (backdrop-blur + transparência)
+- **Sombras suaves e coloridas** em vez de shadow-sm genérico
+- **Ícones dentro de círculos com gradiente** em vez de emojis crus nos botões
+- **Tipografia mais expressiva** com tamanhos maiores nos títulos e pesos variados
+- **Espaçamento mais generoso** e ritmo visual consistente
+- **Botões com gradiente e hover elevado** para o CTA principal
+- **Badges de status coloridos** com bordas arredondadas
+- **Remover emojis dos botões** (usar apenas lucide-react icons para visual limpo)
 
-## 2. Perguntas de Triagem (Seção 9.2 do PRD)
+---
 
-**Arquivo:** `src/data/questions.ts`
+## 1. CSS Global e Design Tokens (`src/index.css`)
 
-Substituir as 10 perguntas atuais pelas exatas do PRD (Seção 9.2):
+Adicionar classes utilitárias globais:
+- `.glass-card` — backdrop-blur, bg branco/10%, borda translúcida
+- `.gradient-bg` — gradiente sutil de fundo (verde claro → branco)
+- `.gradient-btn` — botão primário com gradiente
+- `.icon-circle` — círculo para ícones com gradiente suave
+- Ajustar variáveis de cor para tons mais sofisticados (verde esmeralda mais rico)
 
-| # | Ícone | Pergunta | Peso |
-|---|-------|----------|------|
-| Q01 | 🌿 | Você mora em área rural ou de mata? | 10 |
-| Q02 | 🌿 | Já viajou para locais com casos de leishmaniose? | 10 |
-| Q03 | 🩹 | Possui lesão na pele que não cicatriza? | 20 |
-| Q04 | 📈 | A lesão está crescendo com o tempo? | 15 |
-| Q05 | 🔍 | A lesão não dói e tem aspecto ulcerado? | 20 |
-| Q06 | 🐕 | Houve contato com animais infectados? | 10 |
-| Q07 | 🌿 | Mora em área endêmica? | 10 |
-| Q08 | 📋 | Já teve leishmaniose antes? | 10 |
-| Q09 | 📅 | A ferida tem mais de 2 semanas? | 15 |
-| Q10 | 🦟 | A lesão surgiu após picada de inseto? | 15 |
+## 2. Home (`src/pages/Home.tsx`)
 
-Total: 135 pontos (mesmo valor, perguntas diferentes).
+- Background com gradiente radial sutil verde→branco
+- Logo com sombra glow verde suave
+- Título com gradiente de texto (text-gradient)
+- Subtítulo com opacidade e tracking mais amplo
+- Botão primário com gradiente verde + sombra colorida + hover lift
+- Botões secundários com estilo glass
+- Badge "v1.0" discreto sob o título
+- Footer disclaimer com ícone de escudo
 
-## 3. Regra de Negócio #6 — Aviso de Emergência Antes do Resultado
+## 3. Consent (`src/pages/Consent.tsx`)
 
-**Arquivo:** `src/pages/Result.tsx`
+- Header com ícone Shield em círculo gradiente azul
+- Área de scroll do termo com glass-card e borda sutil
+- Indicador de scroll animado (seta pulsante)
+- Checkbox estilizado com label mais destaque
+- Tela de recusa com ilustração/ícone maior e visual empático
 
-Quando o risco for **alto** (>60%), exibir um alerta vermelho em destaque **antes** do círculo de porcentagem e de todo o conteúdo do resultado. Texto: "🚨 ATENÇÃO: Seus sinais são fortemente sugestivos. Procure uma Unidade Básica de Saúde (UBS) urgentemente. O tratamento é gratuito pelo SUS."
+## 4. UserDataPage (`src/pages/UserDataPage.tsx`)
 
-## 4. Texto das Orientações por Nível (Tabela 10.2 do PRD)
+- Campos de input com foco animado (ring gradiente)
+- Labels com ícones inline pequenos
+- Card glass envolvendo o formulário
+- Stepper visual discreto no topo (passo 1 de 4)
 
-**Arquivo:** `src/store/useLeishCheckStore.ts`
+## 5. Questionnaire (`src/pages/Questionnaire.tsx`)
 
-Ajustar as orientações do `calculateRisk` para os textos exatos da tabela 10.2:
-- Baixo: "Sinais pouco sugestivos. Monitorar. Procurar UBS se piorar."
-- Médio: "Sinais moderados. Recomendado consulta médica breve."
-- Alto: "Sinais fortemente sugestivos. Procure UBS urgentemente."
+- Progress bar com gradiente e glow
+- Card da pergunta com glass-card maior e ícone em círculo colorido
+- Botões Sim/Não com cores distintas (verde/vermelho suave) e ícones
+- Número da pergunta em badge arredondado
+- Transição mais suave entre perguntas
 
-## 5. Service Worker com vite-plugin-pwa
+## 6. ImageUpload (`src/pages/ImageUpload.tsx`)
 
-**Arquivos:** `vite.config.ts`, `src/main.tsx`
+- Área de upload com borda dashed estilizada e ícone central grande
+- Preview da imagem com overlay e bordas arredondadas
+- Botões com ícones mais proeminentes
 
-- Instalar `vite-plugin-pwa`
-- Configurar no `vite.config.ts` com `VitePWA({ registerType: 'autoUpdate', ... })` e manifest inline
-- Registrar o SW em `src/main.tsx`
-- Remover o `manifest.json` manual (será gerado pelo plugin)
+## 7. Result (`src/pages/Result.tsx`)
 
-## 6. IndexedDB com Dexie.js
+- Círculo SVG com glow colorido por trás (drop-shadow)
+- Card de resultado com glass-card
+- Alerta de emergência com ícone pulsante e borda mais dramática
+- Botões de ação com ícones em círculos coloridos à esquerda
+- Disclaimer final com design mais integrado
 
-**Arquivos novos:** `src/lib/db.ts`
-**Arquivo editado:** `src/store/useLeishCheckStore.ts`
+## 8. History (`src/pages/History.tsx`)
 
-- Instalar `dexie`
-- Criar `src/lib/db.ts` com stores: `sessions`, `consent_log`, `user_preferences`
-- Atualizar o store para persistir sessões completas no IndexedDB ao calcular resultado
-- Manter Zustand persist com localStorage para estado de sessão ativa (consentimento e áudio), mas salvar sessões completas no IndexedDB
+- Cards de sessão com hover lift e sombra colorida baseada no nível
+- Badge de porcentagem com gradiente por nível
+- Estado vazio com ilustração/ícone mais elaborado
 
-## 7. prefers-reduced-motion
+## 9. HistoryDetail (`src/pages/HistoryDetail.tsx`)
 
-**Arquivo:** `src/components/AnimatedPage.tsx`, `src/pages/Questionnaire.tsx`, `src/pages/Result.tsx`
+- Header com badge de risco colorido
+- Lista de respostas com alternância de fundo (zebra sutil)
+- Ícones Sim/Não com check/x em círculos coloridos
 
-- Criar um hook `useReducedMotion()` que verifica `window.matchMedia('(prefers-reduced-motion: reduce)')`
-- Em `AnimatedPage`, desabilitar animações (duration: 0) quando reduzido
-- Em `Questionnaire` e `Result`, desabilitar as animações do framer-motion quando a preferência estiver ativa
+## 10. Education (`src/pages/Education.tsx`)
 
-## 8. Botão "Não aceito" com Mensagem Respeitosa
+- Cards com borda lateral colorida (accent bar)
+- Seção de prevenção com ícone de escudo em destaque
+- Cards das fases com numeração estilizada
 
-**Arquivo:** `src/pages/Consent.tsx`
+## 11. AudioToggle (`src/components/AudioToggle.tsx`)
 
-Ao clicar "Não aceito", em vez de simplesmente redirecionar para Home, exibir um dialog/card respeitoso com mensagem:
-- "Entendemos sua decisão. Sem o consentimento, não é possível realizar a triagem. Você pode voltar quando quiser."
-- Botão "Voltar ao Início"
-- Botão "Reconsiderar" para fechar o aviso
+- Botão com glass-effect e backdrop-blur
+- Transição suave entre estados com scale
+
+## 12. NotFound (`src/pages/NotFound.tsx`)
+
+- Visual mais amigável com ícone grande e texto em português
 
 ---
 
 ## Detalhes Técnicos
 
-- **Dependências a instalar:** `vite-plugin-pwa`, `dexie`
-- **Arquivos criados:** `src/lib/db.ts`, `src/hooks/useReducedMotion.ts`
-- **Arquivos editados:** `src/pages/Consent.tsx`, `src/data/questions.ts`, `src/store/useLeishCheckStore.ts`, `src/pages/Result.tsx`, `src/components/AnimatedPage.tsx`, `src/pages/Questionnaire.tsx`, `vite.config.ts`, `src/main.tsx`
-- **Arquivo removido:** `public/manifest.json` (gerenciado pelo vite-plugin-pwa)
+**Arquivos editados (12):**
+- `src/index.css` — novas classes utilitárias, gradientes, glassmorphism
+- `src/pages/Home.tsx` — redesign completo
+- `src/pages/Consent.tsx` — glassmorphism, scroll indicator
+- `src/pages/UserDataPage.tsx` — formulário estilizado
+- `src/pages/Questionnaire.tsx` — progress bar gradiente, botões coloridos
+- `src/pages/ImageUpload.tsx` — upload area redesign
+- `src/pages/Result.tsx` — circle glow, glass cards
+- `src/pages/History.tsx` — cards com hover lift
+- `src/pages/HistoryDetail.tsx` — zebra rows, badges
+- `src/pages/Education.tsx` — accent bars, numbered cards
+- `src/components/AudioToggle.tsx` — glass button
+- `src/pages/NotFound.tsx` — visual amigável em português
+
+**Nenhuma dependência nova.** Tudo feito com Tailwind CSS + classes utilitárias customizadas.
+
+**Princípios mantidos:**
+- Acessibilidade (contraste WCAG AA, áreas de toque 44px+)
+- prefers-reduced-motion respeitado
+- Funcionalidade 100% preservada
+- Responsividade mobile-first
 
