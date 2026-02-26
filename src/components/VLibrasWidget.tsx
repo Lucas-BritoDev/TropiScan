@@ -5,6 +5,22 @@ export function VLibrasWidget() {
     // Check if already loaded
     if (document.getElementById('vlibras-script')) return;
 
+    // Create the widget container first
+    const widgetDiv = document.createElement('div');
+    widgetDiv.setAttribute('vw', '');
+    widgetDiv.classList.add('enabled');
+    const accessButton = document.createElement('div');
+    accessButton.setAttribute('vw-access-button', '');
+    accessButton.classList.add('active');
+    widgetDiv.appendChild(accessButton);
+    const pluginWrapper = document.createElement('div');
+    pluginWrapper.setAttribute('vw-plugin-wrapper', '');
+    const topWrapper = document.createElement('div');
+    topWrapper.className = 'vw-plugin-top-wrapper';
+    pluginWrapper.appendChild(topWrapper);
+    widgetDiv.appendChild(pluginWrapper);
+    document.body.appendChild(widgetDiv);
+
     const script = document.createElement('script');
     script.id = 'vlibras-script';
     script.src = 'https://vlibras.gov.br/app/vlibras-plugin.js';
@@ -18,10 +34,8 @@ export function VLibrasWidget() {
     };
     document.head.appendChild(script);
 
-    return () => {
-      // Don't remove on unmount since VLibras manages its own lifecycle
-    };
+    return () => {};
   }, []);
 
-  return <div vw="true" className="enabled"><div vw-access-button="true" className="active" /></div>;
+  return null;
 }
