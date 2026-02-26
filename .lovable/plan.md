@@ -1,99 +1,46 @@
 
 
-# Redesign Premium do PDF + Polish Visual de Todas as Telas
+# Centralizar Modal de Idioma + Corrigir Sobreposicao dos Botoes Flutuantes
 
-## Visao Geral
+## Problemas Identificados
 
-O PDF atual e basico demais: texto simples sem hierarquia visual, sem cores de fundo, sem badges, sem separadores elegantes. As telas do app ja tem um visual bom com glass-cards e gradients, mas podem ser elevadas com micro-interacoes e detalhes visuais que causam o efeito "UAU".
+1. **Modal de idioma descentralizado** — No mobile, o bottom sheet do seletor de idioma aparece cortado no lado direito (visivel na screenshot image-7). Precisa ser um modal verdadeiramente centralizado.
 
-## 1. PDF Premium — Redesign Completo
+2. **Botoes flutuantes sobrepondo conteudo** — Os 3 botoes fixos no bottom (dark mode em `bottom-4 left-4`, idioma em `bottom-4 left-[4.5rem]`, audio em `bottom-4 right-4`) cobrem o conteudo final das paginas Result e HistoryDetail (visivel nas screenshots image-6 e image-7).
 
-O `generatePDF.ts` sera reescrito com um layout profissional de relatorio medico:
+3. **Erros de console (CORS/postMessage)** — Esses erros vem da infraestrutura do Lovable preview (`lovable.js`, `auth-bridge`, `manifest.webmanifest`). Sao erros do ambiente de preview e **nao podem ser corrigidos no codigo do app**. Eles desaparecem quando o app e publicado/deployado em producao.
 
-```text
-┌─────────────────────────────────────────┐
-│  ████████████████████████████████████████│  ← Header band verde (retangulo colorido)
-│                                         │
-│        LEISHCHECK                       │
-│        Relatorio de Triagem             │
-│        Data: 26/02/2026 14:30           │
-│                                         │
-│  ─────────────────────────────────────  │
-│                                         │
-│     ┌─────────────────────────────┐     │
-│     │   ██ 45% — Risco Medio     │     │  ← Badge colorido com fundo
-│     │   Orientacao resumida...    │     │
-│     └─────────────────────────────┘     │
-│                                         │
-│  ▐ DADOS DO PACIENTE                    │  ← Barra lateral colorida + titulo bold
-│  │ Idade: 32  |  Genero: Masculino      │
-│  │ Local: Belem - PA                    │
-│                                         │
-│  ▐ RESPOSTAS DO QUESTIONARIO            │
-│  │ 1. Mora em area rural?     [✓ Sim]   │  ← Linhas zebradas alternadas
-│  │ 2. Viajou para locais...   [✗ Nao]   │
-│  │ ...                                  │
-│                                         │
-│  ─────────────────────────────────────  │
-│  ⚠ AVISO LEGAL                          │
-│  Este relatorio nao constitui...        │
-│                                         │
-│  ████████████████████████████████████████│  ← Footer band
-│        leishcheck.app                   │
-└─────────────────────────────────────────┘
-```
+## Solucao
 
-Tecnicas usadas (todas suportadas pelo jsPDF sem dependencias extras):
-- **Retangulos coloridos** (`doc.setFillColor` + `doc.rect`) para header/footer bands
-- **Retangulo de resultado** com fundo colorido (verde/amarelo/vermelho) com opacidade
-- **Barra lateral** nos titulos de secao (retangulo fino colorido a esquerda)
-- **Linhas zebradas** nas respostas do questionario (retangulos cinza alternados)
-- **Tipografia hierarquica** — titulo 22pt, secoes 14pt bold, corpo 10pt
-- **Rodape** com numero de pagina e URL do app
-- **Margem lateral** elegante com linha vertical decorativa
+### 1. Centralizar o modal de idioma (`LanguageSelector.tsx`)
+- Mudar de bottom sheet para um modal centralizado na tela (vertical e horizontalmente)
+- Usar `top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2` em vez de `bottom-0 left-1/2`
+- Trocar `rounded-t-3xl` por `rounded-3xl` para bordas arredondadas em todos os lados
+- Remover a barra de arraste (drag handle) pois nao e mais bottom sheet
 
-## 2. Polish Visual das Telas — Detalhes "UAU"
+### 2. Adicionar padding inferior nas paginas (`Result.tsx`, `HistoryDetail.tsx`)
+- Adicionar `pb-24` (padding-bottom de 6rem) no container principal dessas paginas para que o conteudo final nao fique escondido atras dos botoes flutuantes
+- Tambem verificar outras paginas que possam ter o mesmo problema
 
-### Home (`Home.tsx`)
-- Adicionar um subtle shimmer/glow pulsante no logo (CSS keyframe `glow-pulse`)
-- Badge de versao com borda gradiente sutil
+### 3. Erros de console
+- Nao ha correcao possivel no codigo do app — sao erros do ambiente de preview do Lovable
+- Serao informados ao usuario que desaparecem em producao
 
-### Consent (`Consent.tsx`)
-- Step indicator (1/4) no topo como na UserDataPage — consistencia visual
+## Arquivos Editados
 
-### UserDataPage (`UserDataPage.tsx`)
-- Step indicator ja existe, mas os steps futuros devem ter um estilo mais elegante (outline em vez de solid cinza)
+| Arquivo | Mudanca |
+|---------|---------|
+| `src/components/LanguageSelector.tsx` | Modal centralizado em vez de bottom sheet |
+| `src/pages/Result.tsx` | Adicionar `pb-24` no container |
+| `src/pages/HistoryDetail.tsx` | Adicionar `pb-24` no container |
 
-### Questionnaire (`Questionnaire.tsx`)
-- Card da pergunta com sombra mais pronunciada e borda gradiente sutil
+## Detalhes Tecnicos
 
-### Result (`Result.tsx`)
-- Adicionar um confetti/particles sutil no resultado de baixo risco
-- Glow mais intenso no circulo SVG
+**LanguageSelector.tsx** — Linha 49-51: mudar classes do modal:
+- De: `fixed bottom-0 left-1/2 ... rounded-t-3xl border-t`
+- Para: `fixed top-1/2 left-1/2 ... -translate-y-1/2 rounded-3xl border`
 
-### HistoryDetail (`HistoryDetail.tsx`)
-- Sem mudancas — ja usa PageHeader elegante
+**Result.tsx** — Linha 57: mudar `py-8` para `pt-8 pb-24`
 
-### Education (`Education.tsx`)
-- Sem mudancas significativas — ja tem bom visual
-
-## 3. Detalhes Tecnicos
-
-**Arquivo principal editado:**
-- `src/lib/generatePDF.ts` — reescrita completa com layout premium
-
-**Arquivos com polish sutil:**
-- `src/index.css` — adicionar keyframe `glow-pulse` para o logo da Home
-- `src/pages/Home.tsx` — classe `animate-glow-pulse` no logo
-- `src/pages/Consent.tsx` — adicionar step indicator consistente com UserDataPage
-
-**Nenhuma dependencia nova.** Tudo feito com jsPDF nativo (rect, setFillColor, setTextColor, line).
-
-## 4. Cores do PDF por Nivel de Risco
-
-| Nivel | Header Band | Badge BG | Badge Text |
-|-------|-------------|----------|------------|
-| low | RGB(46,125,50) | RGB(232,245,233) | RGB(27,94,32) |
-| medium | RGB(245,166,35) | RGB(255,248,225) | RGB(230,81,0) |
-| high | RGB(211,47,47) | RGB(255,235,238) | RGB(183,28,28) |
+**HistoryDetail.tsx** — Linha 30: mudar `py-8` para `pt-8 pb-24`
 
