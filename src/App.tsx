@@ -72,7 +72,6 @@ function AppShell() {
         </Routes>
       </AnimatePresence>
       <VLibrasWidget />
-      <InstallPrompt />
     </>
   );
 }

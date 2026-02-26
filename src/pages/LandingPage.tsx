@@ -4,6 +4,7 @@ import { motion, useScroll, useTransform } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 import { ChevronDown, MessageSquare, Globe, Wifi, WifiOff, Menu, X, ClipboardList, Camera, BarChart3, Quote } from 'lucide-react';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
+import { InstallPrompt } from '@/components/InstallPrompt';
 import heroImage from '@/assets/hero-landing.jpg';
 
 /* ─── Counter Hook ─── */
@@ -81,7 +82,7 @@ export default function LandingPage() {
 
   return (
     <div className="landing-page bg-[#F5F2EC] text-[#1C2B1E] overflow-x-hidden">
-
+      <InstallPrompt />
       {/* ═══ NAVBAR ═══ */}
       <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${scrolled ? 'bg-[#1C2B1E]/90 backdrop-blur-lg shadow-lg' : 'bg-transparent'}`}>
         <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4 lg:px-12">

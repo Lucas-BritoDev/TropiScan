@@ -63,11 +63,11 @@ export function InstallPrompt() {
     <AnimatePresence>
       {visible && (
         <motion.div
-          initial={{ y: 100, opacity: 0 }}
+          initial={{ y: -50, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
-          exit={{ y: 100, opacity: 0 }}
+          exit={{ y: -50, opacity: 0 }}
           transition={{ type: 'spring', damping: 25, stiffness: 300 }}
-          className="fixed bottom-20 left-4 right-4 z-50 mx-auto max-w-md rounded-2xl border border-border/50 bg-card/80 p-4 shadow-xl backdrop-blur-xl"
+          className="fixed top-24 left-4 right-4 z-[60] mx-auto max-w-md rounded-2xl border border-border/50 bg-card/80 p-4 shadow-xl backdrop-blur-xl"
         >
           <button
             onClick={handleDismiss}
