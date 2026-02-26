@@ -1,7 +1,7 @@
 import Dexie, { type EntityTable } from 'dexie';
 import { UserData, QuestionAnswer, RiskResult } from '@/types/leishcheck';
 
-interface Session {
+export interface DbSession {
   id?: number;
   date: string;
   userData: UserData;
@@ -17,7 +17,7 @@ interface ConsentLog {
 }
 
 const db = new Dexie('LeishCheckDB') as Dexie & {
-  sessions: EntityTable<Session, 'id'>;
+  sessions: EntityTable<DbSession, 'id'>;
   consent_log: EntityTable<ConsentLog, 'id'>;
 };
 
@@ -26,12 +26,16 @@ db.version(1).stores({
   consent_log: '++id, date',
 });
 
-export async function saveSession(session: Omit<Session, 'id'>) {
-  return db.sessions.add(session as Session);
+export async function saveSession(session: Omit<DbSession, 'id'>) {
+  return db.sessions.add(session as DbSession);
 }
 
-export async function getSessions() {
+export async function getSessions(): Promise<DbSession[]> {
   return db.sessions.orderBy('date').reverse().toArray();
+}
+
+export async function getSessionById(id: number): Promise<DbSession | undefined> {
+  return db.sessions.get(id);
 }
 
 export async function logConsent(given: boolean) {
