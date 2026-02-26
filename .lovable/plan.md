@@ -1,130 +1,70 @@
 
 
-# Redesign Visual Completo - LeishCheck
+# Redesign de Headers + Dark Mode Global + Visual de Impacto
 
-Vou transformar o visual de todas as telas aplicando princípios modernos de UI/UX: glassmorphism sutil, gradientes refinados, micro-interações, tipografia com hierarquia clara, espaçamentos generosos e um visual premium de app de saúde.
+## Problemas Identificados
 
-## Filosofia do Redesign
+1. **Dark mode toggle** existe apenas na Home (`src/pages/Home.tsx` linha 37). Ao navegar para qualquer outra tela, o botão desaparece.
+2. **Headers com botão voltar** usam o padrão genérico `flex items-center gap-3` + círculo cinza + título simples — visual sem personalidade.
+3. **AudioToggle** e **LanguageSelector** já são globais (renderizados em `App.tsx`), mas o dark mode toggle não.
 
-- **Gradientes sutis** no background em vez de cor chapada
-- **Glassmorphism** nos cards (backdrop-blur + transparência)
-- **Sombras suaves e coloridas** em vez de shadow-sm genérico
-- **Ícones dentro de círculos com gradiente** em vez de emojis crus nos botões
-- **Tipografia mais expressiva** com tamanhos maiores nos títulos e pesos variados
-- **Espaçamento mais generoso** e ritmo visual consistente
-- **Botões com gradiente e hover elevado** para o CTA principal
-- **Badges de status coloridos** com bordas arredondadas
-- **Remover emojis dos botões** (usar apenas lucide-react icons para visual limpo)
+## Solução
 
----
+### 1. Dark Mode Toggle Global
+- Extrair o toggle de dark mode de `Home.tsx` e criar um componente `DarkModeToggle.tsx`
+- Renderizá-lo em `App.tsx` junto com AudioToggle e LanguageSelector
+- Posicioná-lo como botão flutuante fixo (top-left, ao lado do LanguageSelector)
+- Remover o toggle duplicado de `Home.tsx`
+- Reposicionar os 3 botões flutuantes: Dark mode (top-left pos 1), Language (top-left pos 2), Audio (top-right)
 
-## 1. CSS Global e Design Tokens (`src/index.css`)
+### 2. Redesign dos Headers — Visual "UAU"
+Substituir o padrão atual por um header mais sofisticado em todas as páginas:
+- Botão voltar com glass-card style (backdrop-blur) em vez de `bg-muted/80`
+- Título centralizado com subtítulo descritivo em texto menor
+- Linha decorativa gradiente abaixo do título
+- Ícone temático da página ao lado do título (não mais separado)
 
-Adicionar classes utilitárias globais:
-- `.glass-card` — backdrop-blur, bg branco/10%, borda translúcida
-- `.gradient-bg` — gradiente sutil de fundo (verde claro → branco)
-- `.gradient-btn` — botão primário com gradiente
-- `.icon-circle` — círculo para ícones com gradiente suave
-- Ajustar variáveis de cor para tons mais sofisticados (verde esmeralda mais rico)
+Páginas afetadas:
+- `Consent.tsx` — header com ícone Shield integrado
+- `UserDataPage.tsx` — header com ícone User integrado  
+- `Questionnaire.tsx` — header com progress integrado elegantemente
+- `ImageUpload.tsx` — header com ícone Camera
+- `Result.tsx` — sem back button (é tela final), mas título estilizado
+- `History.tsx` — header com ícone History
+- `HistoryDetail.tsx` — header com badge de risco
+- `Education.tsx` — header com ícone BookOpen
 
-## 2. Home (`src/pages/Home.tsx`)
+### 3. Padrão Visual dos Novos Headers
 
-- Background com gradiente radial sutil verde→branco
-- Logo com sombra glow verde suave
-- Título com gradiente de texto (text-gradient)
-- Subtítulo com opacidade e tracking mais amplo
-- Botão primário com gradiente verde + sombra colorida + hover lift
-- Botões secundários com estilo glass
-- Badge "v1.0" discreto sob o título
-- Footer disclaimer com ícone de escudo
+```text
+┌─────────────────────────────────┐
+│  [←]     Título da Página       │
+│          Subtítulo descritivo    │
+│  ═══════════════════════════    │ ← linha gradiente decorativa
+└─────────────────────────────────┘
+```
 
-## 3. Consent (`src/pages/Consent.tsx`)
+- Botão voltar: glass-card com border sutil, ícone com cor primary
+- Título: `text-2xl font-bold text-gradient`  
+- Subtítulo: `text-sm text-muted-foreground`
+- Linha decorativa: `h-0.5 w-16 bg-gradient-to-r from-primary to-primary-light rounded-full`
 
-- Header com ícone Shield em círculo gradiente azul
-- Área de scroll do termo com glass-card e borda sutil
-- Indicador de scroll animado (seta pulsante)
-- Checkbox estilizado com label mais destaque
-- Tela de recusa com ilustração/ícone maior e visual empático
+### 4. Detalhes Técnicos
 
-## 4. UserDataPage (`src/pages/UserDataPage.tsx`)
+**Arquivos novos (1):**
+- `src/components/DarkModeToggle.tsx` — componente do toggle de tema
 
-- Campos de input com foco animado (ring gradiente)
-- Labels com ícones inline pequenos
-- Card glass envolvendo o formulário
-- Stepper visual discreto no topo (passo 1 de 4)
+**Arquivos editados (10):**
+- `src/App.tsx` — adicionar DarkModeToggle global, reposicionar botões flutuantes
+- `src/components/LanguageSelector.tsx` — ajustar posição (`left-[7.5rem]` para dar espaço ao dark mode)
+- `src/pages/Home.tsx` — remover toggle de dark mode local, manter visual existente
+- `src/pages/Consent.tsx` — novo header elegante
+- `src/pages/UserDataPage.tsx` — novo header elegante
+- `src/pages/Questionnaire.tsx` — header redesenhado com progress bar integrada
+- `src/pages/ImageUpload.tsx` — novo header elegante
+- `src/pages/History.tsx` — novo header elegante
+- `src/pages/HistoryDetail.tsx` — novo header com badge de risco integrado
+- `src/pages/Education.tsx` — novo header elegante
 
-## 5. Questionnaire (`src/pages/Questionnaire.tsx`)
-
-- Progress bar com gradiente e glow
-- Card da pergunta com glass-card maior e ícone em círculo colorido
-- Botões Sim/Não com cores distintas (verde/vermelho suave) e ícones
-- Número da pergunta em badge arredondado
-- Transição mais suave entre perguntas
-
-## 6. ImageUpload (`src/pages/ImageUpload.tsx`)
-
-- Área de upload com borda dashed estilizada e ícone central grande
-- Preview da imagem com overlay e bordas arredondadas
-- Botões com ícones mais proeminentes
-
-## 7. Result (`src/pages/Result.tsx`)
-
-- Círculo SVG com glow colorido por trás (drop-shadow)
-- Card de resultado com glass-card
-- Alerta de emergência com ícone pulsante e borda mais dramática
-- Botões de ação com ícones em círculos coloridos à esquerda
-- Disclaimer final com design mais integrado
-
-## 8. History (`src/pages/History.tsx`)
-
-- Cards de sessão com hover lift e sombra colorida baseada no nível
-- Badge de porcentagem com gradiente por nível
-- Estado vazio com ilustração/ícone mais elaborado
-
-## 9. HistoryDetail (`src/pages/HistoryDetail.tsx`)
-
-- Header com badge de risco colorido
-- Lista de respostas com alternância de fundo (zebra sutil)
-- Ícones Sim/Não com check/x em círculos coloridos
-
-## 10. Education (`src/pages/Education.tsx`)
-
-- Cards com borda lateral colorida (accent bar)
-- Seção de prevenção com ícone de escudo em destaque
-- Cards das fases com numeração estilizada
-
-## 11. AudioToggle (`src/components/AudioToggle.tsx`)
-
-- Botão com glass-effect e backdrop-blur
-- Transição suave entre estados com scale
-
-## 12. NotFound (`src/pages/NotFound.tsx`)
-
-- Visual mais amigável com ícone grande e texto em português
-
----
-
-## Detalhes Técnicos
-
-**Arquivos editados (12):**
-- `src/index.css` — novas classes utilitárias, gradientes, glassmorphism
-- `src/pages/Home.tsx` — redesign completo
-- `src/pages/Consent.tsx` — glassmorphism, scroll indicator
-- `src/pages/UserDataPage.tsx` — formulário estilizado
-- `src/pages/Questionnaire.tsx` — progress bar gradiente, botões coloridos
-- `src/pages/ImageUpload.tsx` — upload area redesign
-- `src/pages/Result.tsx` — circle glow, glass cards
-- `src/pages/History.tsx` — cards com hover lift
-- `src/pages/HistoryDetail.tsx` — zebra rows, badges
-- `src/pages/Education.tsx` — accent bars, numbered cards
-- `src/components/AudioToggle.tsx` — glass button
-- `src/pages/NotFound.tsx` — visual amigável em português
-
-**Nenhuma dependência nova.** Tudo feito com Tailwind CSS + classes utilitárias customizadas.
-
-**Princípios mantidos:**
-- Acessibilidade (contraste WCAG AA, áreas de toque 44px+)
-- prefers-reduced-motion respeitado
-- Funcionalidade 100% preservada
-- Responsividade mobile-first
+**Nenhuma dependência nova.** Usando os mesmos utilitários CSS existentes (glass-card, text-gradient, hover-lift).
 
