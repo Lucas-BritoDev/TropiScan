@@ -64,9 +64,10 @@ export default function History() {
               const date = new Date(s.date);
               const colors = levelColors[s.result.level as keyof typeof levelColors] || levelColors.low;
               return (
-                <div
+                <button
                   key={s.id}
-                  className="flex items-center gap-4 rounded-2xl border border-border bg-card p-4 shadow-sm"
+                  onClick={() => navigate(`/historico/${s.id}`)}
+                  className="flex w-full items-center gap-4 rounded-2xl border border-border bg-card p-4 shadow-sm text-left transition-colors hover:bg-muted/50"
                 >
                   <div className={`flex h-12 w-12 items-center justify-center rounded-full border ${colors}`}>
                     <span className="text-lg font-bold">{s.result.percentage}%</span>
@@ -78,7 +79,7 @@ export default function History() {
                     </p>
                   </div>
                   <ChevronRight className="h-5 w-5 text-muted-foreground" />
-                </div>
+                </button>
               );
             })}
           </div>

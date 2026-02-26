@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useLeishCheckStore } from '@/store/useLeishCheckStore';
 import { speakText } from '@/components/AudioToggle';
 import { Button } from '@/components/ui/button';
-import { MapPin, BookOpen, RotateCcw, AlertTriangle } from 'lucide-react';
+import { MapPin, BookOpen, RotateCcw, AlertTriangle, FileDown } from 'lucide-react';
 import AnimatedPage from '@/components/AnimatedPage';
 import { motion } from 'framer-motion';
 import { useReducedMotion } from '@/hooks/useReducedMotion';
@@ -12,8 +12,7 @@ const CIRCLE_RADIUS = 70;
 const CIRCUMFERENCE = 2 * Math.PI * CIRCLE_RADIUS;
 
 export default function Result() {
-  const navigate = useNavigate();
-  const { result, resetTriagem, audioEnabled } = useLeishCheckStore();
+  const { result, resetTriagem, audioEnabled, answers, userData } = useLeishCheckStore();
   const [displayPercent, setDisplayPercent] = useState(0);
   const prefersReduced = useReducedMotion();
 
@@ -143,6 +142,18 @@ export default function Result() {
             aria-label="Acessar material educativo"
           >
             <BookOpen className="mr-2 h-5 w-5" /> 📚 Saiba mais
+          </Button>
+          <Button
+            onClick={() => {
+              import('@/lib/generatePDF').then(({ generateResultPDF }) => {
+                generateResultPDF(result, answers, userData);
+              });
+            }}
+            variant="outline"
+            className="h-14 w-full rounded-2xl text-lg font-semibold"
+            aria-label="Baixar resultado em PDF"
+          >
+            <FileDown className="mr-2 h-5 w-5" /> 📄 Baixar PDF
           </Button>
           <Button
             onClick={handleRetry}
