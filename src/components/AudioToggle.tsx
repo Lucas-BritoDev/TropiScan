@@ -7,7 +7,7 @@ export function AudioToggle() {
   return (
     <button
       onClick={toggleAudio}
-      className="fixed top-4 right-4 z-50 flex h-12 w-12 items-center justify-center rounded-full shadow-lg transition-all hover:scale-110 active:scale-95 border border-border/50"
+      className="fixed bottom-4 right-4 z-50 flex h-12 w-12 items-center justify-center rounded-full shadow-lg transition-all hover:scale-110 active:scale-95 border border-border/50"
       style={{
         background: 'hsl(var(--card) / 0.85)',
         backdropFilter: 'blur(16px)',
