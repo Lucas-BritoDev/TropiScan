@@ -39,15 +39,7 @@ export function useInstallApp() {
       e.preventDefault();
       const promptEvent = e as BeforeInstallPromptEvent;
       setDeferredPrompt(promptEvent);
-      
-      // Tentar instalação automática no Android
-      if (/android/.test(userAgent)) {
-        setTimeout(() => {
-          promptEvent.prompt().catch(err => {
-            console.log('Auto-install failed, showing manual instructions', err);
-          });
-        }, 3000);
-      }
+      console.log('beforeinstallprompt event captured');
     };
 
     window.addEventListener('beforeinstallprompt', handler);

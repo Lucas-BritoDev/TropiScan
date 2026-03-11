@@ -162,6 +162,27 @@ export function InstallPWAButton() {
                   Acesse rapidamente pela tela inicial do seu dispositivo. 
                   Funciona offline e ocupa pouco espaço.
                 </p>
+
+                {/* Instruções baseadas na plataforma */}
+                {!deferredPrompt && (
+                  <div className="mb-6 p-4 bg-muted/50 rounded-lg text-left">
+                    <h3 className="font-semibold mb-3 text-foreground">Como instalar:</h3>
+                    <ol className="space-y-2 text-sm text-muted-foreground">
+                      <li className="flex items-start gap-2">
+                        <span className="font-bold text-foreground">1.</span>
+                        <span>Toque no menu do navegador (três pontos ⋮)</span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <span className="font-bold text-foreground">2.</span>
+                        <span>Selecione "Adicionar à tela inicial" ou "Instalar app"</span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <span className="font-bold text-foreground">3.</span>
+                        <span>Confirme a instalação</span>
+                      </li>
+                    </ol>
+                  </div>
+                )}
                 
                 <div className="flex gap-3">
                   <button
@@ -172,15 +193,30 @@ export function InstallPWAButton() {
                   </button>
                   
                   <button
-                    onClick={() => {
+                    onClick={async () => {
                       if (deferredPrompt) {
-                        triggerNativeInstall();
+                        try {
+                          await deferredPrompt.prompt();
+                          const { outcome } = await deferredPrompt.userChoice;
+                          if (outcome === 'accepted') {
+                            console.log('PWA instalado com sucesso!');
+                            setShowModal(false);
+                          } else {
+                            console.log('Usuário recusou a instalação');
+                          }
+                        } catch (error) {
+                          console.error('Erro ao instalar:', error);
+                          alert('Não foi possível instalar automaticamente. Use as instruções manuais acima.');
+                        }
+                      } else {
+                        // Se não há prompt nativo, fechar modal (usuário já viu as instruções)
+                        setShowModal(false);
+                        alert('Use as instruções acima para instalar o aplicativo manualmente.');
                       }
-                      // Não fechar o modal nem esconder o botão
                     }}
                     className="flex-1 bg-primary hover:bg-primary/90 text-primary-foreground px-4 py-2 rounded-lg font-medium transition-colors"
                   >
-                    Instalar
+                    {deferredPrompt ? 'Instalar' : 'Entendi'}
                   </button>
                 </div>
               </div>
