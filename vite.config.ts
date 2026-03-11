@@ -22,7 +22,7 @@ export default defineConfig(({ mode }) => ({
         name: "TropiScan - Portal de Doenças Negligenciadas",
         short_name: "TropiScan",
         description: "Portal de triagem para doenças negligenciadas na América Latina",
-        theme_color: "#16a34a",
+        theme_color: "#1a4d3a",
         background_color: "#ffffff",
         display: "standalone",
         orientation: "portrait",
