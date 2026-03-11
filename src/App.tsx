@@ -13,6 +13,7 @@ import { VLibrasWidget } from "@/components/VLibrasWidget";
 import { OfflineBanner } from "@/components/OfflineBanner";
 import { InstallPrompt } from "@/components/InstallPrompt";
 import LandingPage from "./pages/LandingPage";
+import DiseaseSelection from "./pages/DiseaseSelection";
 import Home from "./pages/Home";
 import Consent from "./pages/Consent";
 import UserDataPage from "./pages/UserDataPage";
@@ -59,6 +60,7 @@ function AppShell() {
       <AnimatePresence mode="wait">
         <Routes location={location} key={location.pathname}>
           <Route path="/" element={<LandingPage />} />
+          <Route path="/selecionar-doenca" element={<DiseaseSelection />} />
           <Route path="/app" element={<Home />} />
           <Route path="/consentimento" element={<Consent />} />
           <Route path="/dados" element={<UserDataPage />} />

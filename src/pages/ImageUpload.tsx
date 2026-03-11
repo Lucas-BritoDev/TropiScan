@@ -1,6 +1,6 @@
 import { useRef, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useLeishCheckStore } from '@/store/useLeishCheckStore';
+import { useTropiScanStore } from '@/store/useTropiScanStore';
 import { speakText } from '@/components/AudioToggle';
 import { Camera, Image, SkipForward, Loader2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -12,7 +12,7 @@ import { toast } from 'sonner';
 
 export default function ImageUpload() {
   const navigate = useNavigate();
-  const { setImage, imageBase64, calculateResult, audioEnabled, answers, userData } = useLeishCheckStore();
+  const { setImage, imageBase64, calculateResult, audioEnabled, answers, userData } = useTropiScanStore();
   const [preview, setPreview] = useState<string | null>(imageBase64);
   const [analyzing, setAnalyzing] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);

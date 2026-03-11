@@ -1,6 +1,6 @@
 import { supabase } from '@/integrations/supabase/client';
-import { AIAnalysis } from '@/types/leishcheck';
-import { QuestionAnswer, UserData } from '@/types/leishcheck';
+import { AIAnalysis } from '@/types/tropiscan';
+import { QuestionAnswer, UserData } from '@/types/tropiscan';
 
 export async function analyzeImage(
   imageBase64: string,

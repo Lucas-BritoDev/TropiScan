@@ -20,7 +20,7 @@ i18n
     interpolation: { escapeValue: false },
     detection: {
       order: ['localStorage', 'navigator'],
-      lookupLocalStorage: 'leishcheck-language',
+      lookupLocalStorage: 'tropiscan-language',
       caches: ['localStorage'],
     },
   });

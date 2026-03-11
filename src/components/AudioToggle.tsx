@@ -1,8 +1,8 @@
-import { useLeishCheckStore } from '@/store/useLeishCheckStore';
+import { useTropiScanStore } from '@/store/useTropiScanStore';
 import { Volume2, VolumeX } from 'lucide-react';
 
 export function AudioToggle() {
-  const { audioEnabled, toggleAudio } = useLeishCheckStore();
+  const { audioEnabled, toggleAudio } = useTropiScanStore();
 
   return (
     <button

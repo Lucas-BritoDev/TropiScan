@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useLeishCheckStore } from '@/store/useLeishCheckStore';
+import { useTropiScanStore } from '@/store/useTropiScanStore';
 import { speakText } from '@/components/AudioToggle';
 import { Button } from '@/components/ui/button';
 import { MapPin, BookOpen, RotateCcw, AlertTriangle, FileDown, ShieldCheck, Sparkles, Eye } from 'lucide-react';
@@ -16,7 +16,7 @@ const CIRCUMFERENCE = 2 * Math.PI * CIRCLE_RADIUS;
 
 export default function Result() {
   const navigate = useNavigate();
-  const { result, resetTriagem, audioEnabled, answers, userData } = useLeishCheckStore();
+  const { result, resetTriagem, audioEnabled, answers, userData } = useTropiScanStore();
   const [displayPercent, setDisplayPercent] = useState(0);
   const prefersReduced = useReducedMotion();
   const { t } = useTranslation();

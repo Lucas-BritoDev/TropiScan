@@ -1,6 +1,6 @@
 import { useState, useRef, useCallback, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useLeishCheckStore } from '@/store/useLeishCheckStore';
+import { useTropiScanStore } from '@/store/useTropiScanStore';
 import { speakText } from '@/components/AudioToggle';
 import { Shield, ChevronDown, HeartHandshake, CheckCircle2, Eye, Home } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -16,7 +16,7 @@ export default function Consent() {
   const [showFullTerm, setShowFullTerm] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
-  const { setConsent, audioEnabled, checkConsentValid, consentDate } = useLeishCheckStore();
+  const { setConsent, audioEnabled, checkConsentValid, consentDate } = useTropiScanStore();
   const { t } = useTranslation();
 
   const alreadyAccepted = checkConsentValid();

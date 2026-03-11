@@ -19,9 +19,9 @@ export default defineConfig(({ mode }) => ({
       registerType: "autoUpdate",
       includeAssets: ["favicon.ico", "icon-192.png", "icon-512.png"],
       manifest: {
-        name: "LeishCheck - Triagem de Leishmaniose",
-        short_name: "LeishCheck",
-        description: "Ferramenta de triagem de risco para Leishmaniose Tegumentar",
+        name: "TropiScan - Portal de Doenças Negligenciadas",
+        short_name: "TropiScan",
+        description: "Portal de triagem para doenças negligenciadas na América Latina",
         theme_color: "#16a34a",
         background_color: "#ffffff",
         display: "standalone",

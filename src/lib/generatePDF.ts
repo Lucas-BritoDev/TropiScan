@@ -1,5 +1,5 @@
 import jsPDF from 'jspdf';
-import { RiskResult, QuestionAnswer } from '@/types/leishcheck';
+import { RiskResult, QuestionAnswer } from '@/types/tropiscan';
 import { questions } from '@/data/questions';
 
 const MARGIN = 18;
@@ -39,7 +39,7 @@ function drawFooter(doc: jsPDF, pageNum: number, totalPages: number) {
   doc.setFontSize(7);
   doc.setTextColor(160);
   doc.setFont('helvetica', 'normal');
-  doc.text('LeishCheck — Triagem Clínica Digital', MARGIN, h - 10);
+  doc.text('TropiScan — Triagem Clínica Digital', MARGIN, h - 10);
   doc.text(`${pageNum}/${totalPages}`, PAGE_W - MARGIN, h - 10, { align: 'right' });
 }
 
@@ -77,7 +77,7 @@ export function generateResultPDF(
   doc.setTextColor(255, 255, 255);
   doc.setFontSize(26);
   doc.setFont('helvetica', 'bold');
-  doc.text('LEISHCHECK', MARGIN, 18);
+  doc.text('TROPISCAN', MARGIN, 18);
   doc.setFontSize(10);
   doc.setFont('helvetica', 'normal');
   doc.text('Relatório de Triagem Clínica', MARGIN, 26);
@@ -350,5 +350,5 @@ export function generateResultPDF(
     drawFooter(doc, p, totalPages);
   }
 
-  doc.save(`LeishCheck_Resultado_${new Date().toISOString().slice(0, 10)}.pdf`);
+  doc.save(`TropiScan_Resultado_${new Date().toISOString().slice(0, 10)}.pdf`);
 }

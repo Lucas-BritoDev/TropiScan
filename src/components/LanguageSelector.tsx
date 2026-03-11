@@ -15,7 +15,7 @@ export function LanguageSelector() {
 
   const handleSelect = (code: string) => {
     i18n.changeLanguage(code);
-    localStorage.setItem('leishcheck-language', code);
+    localStorage.setItem('tropiscan-language', code);
     setOpen(false);
   };
 

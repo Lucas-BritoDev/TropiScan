@@ -1,8 +1,8 @@
 import { Moon, Sun } from 'lucide-react';
-import { useLeishCheckStore } from '@/store/useLeishCheckStore';
+import { useTropiScanStore } from '@/store/useTropiScanStore';
 
 export function DarkModeToggle() {
-  const { darkMode, toggleDarkMode } = useLeishCheckStore();
+  const { darkMode, toggleDarkMode } = useTropiScanStore();
 
   return (
     <button

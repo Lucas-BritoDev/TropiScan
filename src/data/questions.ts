@@ -1,4 +1,4 @@
-import { Question } from '@/types/leishcheck';
+import { Question } from '@/types/tropiscan';
 
 export const questions: Question[] = [
   {

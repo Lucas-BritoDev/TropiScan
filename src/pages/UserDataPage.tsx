@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useLeishCheckStore } from '@/store/useLeishCheckStore';
+import { useTropiScanStore } from '@/store/useTropiScanStore';
 import { speakText } from '@/components/AudioToggle';
 import { User, Calendar, MapPin, Users } from 'lucide-react';
 import { Input } from '@/components/ui/input';
@@ -14,7 +14,7 @@ const ESTADOS = ['AC','AL','AP','AM','BA','CE','DF','ES','GO','MA','MT','MS','MG
 
 export default function UserDataPage() {
   const navigate = useNavigate();
-  const { userData, setUserData, audioEnabled } = useLeishCheckStore();
+  const { userData, setUserData, audioEnabled } = useTropiScanStore();
   const { t } = useTranslation();
   const [age, setAge] = useState(userData.age?.toString() || '');
   const [gender, setGender] = useState(userData.gender || '');

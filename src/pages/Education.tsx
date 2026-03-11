@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useLeishCheckStore } from '@/store/useLeishCheckStore';
+import { useTropiScanStore } from '@/store/useTropiScanStore';
 import { speakText } from '@/components/AudioToggle';
 import { Volume2, Shield, Bug, BookOpen } from 'lucide-react';
 import AnimatedPage from '@/components/AnimatedPage';
@@ -18,7 +18,7 @@ const phaseImages = [eduPhase1, eduPhase2, eduPhase3];
 
 export default function Education() {
   const navigate = useNavigate();
-  const { audioEnabled } = useLeishCheckStore();
+  const { audioEnabled } = useTropiScanStore();
   const { t } = useTranslation();
   const prefersReduced = useReducedMotion();
 

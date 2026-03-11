@@ -1,5 +1,5 @@
 import { openDB, type DBSchema, type IDBPDatabase } from 'idb';
-import { UserData, QuestionAnswer, RiskResult } from '@/types/leishcheck';
+import { UserData, QuestionAnswer, RiskResult, DiseaseType } from '@/types/tropiscan';
 
 export interface DbSession {
   id?: number;
@@ -8,6 +8,7 @@ export interface DbSession {
   answers: QuestionAnswer[];
   result: RiskResult;
   hasImage: boolean;
+  diseaseType?: DiseaseType;
 }
 
 interface ConsentLog {
@@ -16,7 +17,7 @@ interface ConsentLog {
   given: boolean;
 }
 
-interface LeishCheckDB extends DBSchema {
+interface TropiScanDB extends DBSchema {
   sessions: {
     key: number;
     value: DbSession;
@@ -29,11 +30,11 @@ interface LeishCheckDB extends DBSchema {
   };
 }
 
-let dbPromise: Promise<IDBPDatabase<LeishCheckDB>> | null = null;
+let dbPromise: Promise<IDBPDatabase<TropiScanDB>> | null = null;
 
 function getDb() {
   if (!dbPromise) {
-    dbPromise = openDB<LeishCheckDB>('LeishCheckDB', 1, {
+    dbPromise = openDB<TropiScanDB>('TropiScanDB', 1, {
       upgrade(db) {
         const sessionStore = db.createObjectStore('sessions', { keyPath: 'id', autoIncrement: true });
         sessionStore.createIndex('date', 'date');

@@ -1,10 +1,13 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import { UserData, QuestionAnswer, RiskResult, RiskLevel, AIAnalysis } from '@/types/leishcheck';
+import { UserData, QuestionAnswer, RiskResult, RiskLevel, AIAnalysis, DiseaseType } from '@/types/tropiscan';
 import { questions, MAX_SCORE } from '@/data/questions';
+import { chagasQuestions, MAX_CHAGAS_SCORE } from '@/data/questions-chagas';
+import { hanseniaseQuestions, MAX_HANSENIASE_SCORE } from '@/data/questions-hanseniase';
+import { esquistossomoseQuestions, MAX_ESQUISTOSSOMOSE_SCORE } from '@/data/questions-esquistossomose';
 import { saveSession } from '@/lib/db';
 
-interface LeishCheckState {
+interface TropiScanState {
   // Audio
   audioEnabled: boolean;
   toggleAudio: () => void;
@@ -12,6 +15,10 @@ interface LeishCheckState {
   // Dark mode
   darkMode: boolean;
   toggleDarkMode: () => void;
+
+  // Disease selection
+  selectedDisease: DiseaseType | null;
+  setSelectedDisease: (disease: DiseaseType) => void;
 
   // Consent
   consentGiven: boolean;
@@ -41,15 +48,48 @@ interface LeishCheckState {
 
   // Reset
   resetTriagem: () => void;
+
+  // Helper methods
+  getCurrentQuestions: () => typeof questions;
+  getMaxScore: () => number;
 }
 
-function calculateRisk(answers: QuestionAnswer[], aiAnalysis?: AIAnalysis): RiskResult {
+function getCurrentQuestionsForDisease(disease: DiseaseType | null) {
+  switch (disease) {
+    case 'chagas':
+      return chagasQuestions;
+    case 'hanseniase':
+      return hanseniaseQuestions;
+    case 'esquistossomose':
+      return esquistossomoseQuestions;
+    default:
+      return questions; // leishmaniasis as default
+  }
+}
+
+function getMaxScoreForDisease(disease: DiseaseType | null) {
+  switch (disease) {
+    case 'chagas':
+      return MAX_CHAGAS_SCORE;
+    case 'hanseniase':
+      return MAX_HANSENIASE_SCORE;
+    case 'esquistossomose':
+      return MAX_ESQUISTOSSOMOSE_SCORE;
+    default:
+      return MAX_SCORE; // leishmaniasis as default
+  }
+}
+
+function calculateRisk(answers: QuestionAnswer[], selectedDisease: DiseaseType | null, aiAnalysis?: AIAnalysis): RiskResult {
+  const currentQuestions = getCurrentQuestionsForDisease(selectedDisease);
+  const maxScore = getMaxScoreForDisease(selectedDisease);
+  
   const score = answers.reduce((sum, a) => {
-    if (a.answer) return sum + questions[a.questionIndex].weight;
+    if (a.answer) return sum + currentQuestions[a.questionIndex].weight;
     return sum;
   }, 0);
 
-  let percentage = Math.round((score / MAX_SCORE) * 100);
+  let percentage = Math.round((score / maxScore) * 100);
 
   // Apply AI adjustment if available
   if (aiAnalysis) {
@@ -61,20 +101,29 @@ function calculateRisk(answers: QuestionAnswer[], aiAnalysis?: AIAnalysis): Risk
   let description: string;
   let orientation: string;
 
+  const diseaseNames = {
+    chagas: 'Doença de Chagas',
+    hanseniase: 'Hanseníase', 
+    esquistossomose: 'Esquistossomose',
+    default: 'Leishmaniose'
+  };
+
+  const diseaseName = selectedDisease ? diseaseNames[selectedDisease] : diseaseNames.default;
+
   if (percentage <= 30) {
     level = 'low';
     title = 'RISCO BAIXO';
-    description = 'Sinais pouco sugestivos de leishmaniose cutânea.';
+    description = `Sinais pouco sugestivos de ${diseaseName.toLowerCase()}.`;
     orientation = 'Sinais pouco sugestivos. Monitorar. Procurar UBS se piorar.';
   } else if (percentage <= 60) {
     level = 'medium';
     title = 'RISCO MODERADO';
-    description = 'Sinais moderados para leishmaniose cutânea.';
+    description = `Sinais moderados para ${diseaseName.toLowerCase()}.`;
     orientation = 'Sinais moderados. Recomendado consulta médica breve.';
   } else {
     level = 'high';
     title = 'RISCO ELEVADO';
-    description = 'Sinais fortemente sugestivos de leishmaniose cutânea.';
+    description = `Sinais fortemente sugestivos de ${diseaseName.toLowerCase()}.`;
     orientation = 'Sinais fortemente sugestivos. Procure UBS urgentemente.';
   }
 
@@ -89,7 +138,7 @@ function applyDarkClass(dark: boolean) {
   }
 }
 
-export const useLeishCheckStore = create<LeishCheckState>()(
+export const useTropiScanStore = create<TropiScanState>()(
   persist(
     (set, get) => ({
       audioEnabled: false,
@@ -102,6 +151,9 @@ export const useLeishCheckStore = create<LeishCheckState>()(
           applyDarkClass(next);
           return { darkMode: next };
         }),
+
+      selectedDisease: null,
+      setSelectedDisease: (disease) => set({ selectedDisease: disease }),
 
       consentGiven: false,
       consentDate: null,
@@ -125,8 +177,21 @@ export const useLeishCheckStore = create<LeishCheckState>()(
           return { answers: [...filtered, { questionIndex, answer }] };
         }),
       goToQuestion: (index) => set({ currentQuestion: index }),
-      nextQuestion: () => set((s) => ({ currentQuestion: Math.min(s.currentQuestion + 1, questions.length - 1) })),
+      nextQuestion: () => {
+        const { selectedDisease } = get();
+        const currentQuestions = getCurrentQuestionsForDisease(selectedDisease);
+        set((s) => ({ currentQuestion: Math.min(s.currentQuestion + 1, currentQuestions.length - 1) }));
+      },
       prevQuestion: () => set((s) => ({ currentQuestion: Math.max(s.currentQuestion - 1, 0) })),
+
+      getCurrentQuestions: () => {
+        const { selectedDisease } = get();
+        return getCurrentQuestionsForDisease(selectedDisease);
+      },
+      getMaxScore: () => {
+        const { selectedDisease } = get();
+        return getMaxScoreForDisease(selectedDisease);
+      },
 
       imageBase64: null,
       setImage: (base64) => set({ imageBase64: base64 }),
@@ -134,7 +199,7 @@ export const useLeishCheckStore = create<LeishCheckState>()(
       result: null,
       calculateResult: (aiAnalysis?: AIAnalysis) => {
         const state = get();
-        const result = calculateRisk(state.answers, aiAnalysis);
+        const result = calculateRisk(state.answers, state.selectedDisease, aiAnalysis);
         set({ result });
 
         saveSession({
@@ -143,6 +208,7 @@ export const useLeishCheckStore = create<LeishCheckState>()(
           answers: state.answers,
           result,
           hasImage: !!state.imageBase64,
+          diseaseType: state.selectedDisease,
         }).catch(console.error);
 
         return result;
@@ -155,15 +221,17 @@ export const useLeishCheckStore = create<LeishCheckState>()(
           answers: [],
           imageBase64: null,
           result: null,
+          selectedDisease: null,
         }),
     }),
     {
-      name: 'leishcheck-storage',
+      name: 'tropiscan-storage',
       partialize: (state) => ({
         audioEnabled: state.audioEnabled,
         consentGiven: state.consentGiven,
         consentDate: state.consentDate,
         darkMode: state.darkMode,
+        selectedDisease: state.selectedDisease,
       }),
       onRehydrateStorage: () => (state) => {
         if (state?.darkMode) {

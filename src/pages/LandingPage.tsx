@@ -6,6 +6,7 @@ import { ChevronDown, MessageSquare, Globe, Wifi, WifiOff, Menu, X, ClipboardLis
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { useInstallApp, InstallAppModal } from '@/hooks/useInstallApp';
 import heroImage from '@/assets/hero-landing.jpg';
+import logoTropiScan from '@/assets/logo-tropiscan.svg';
 
 /* ─── Counter Hook ─── */
 function useCountUp(end: number, duration = 1500, startOnView = true) {
@@ -71,9 +72,9 @@ export default function LandingPage() {
   }, []);
 
   /* Counters */
-  const c1 = useCountUp(20000);
-  const c2 = useCountUp(70);
-  const c3 = useCountUp(3);
+  const c1 = useCountUp(25);
+  const c2 = useCountUp(80);
+  const c3 = useCountUp(5);
 
   const navLinks = [
     { label: t('landing.navHow'), id: 'como-funciona' },
@@ -95,7 +96,7 @@ export default function LandingPage() {
       <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${scrolled ? 'bg-[#1C2B1E]/90 backdrop-blur-lg shadow-lg' : 'bg-transparent'}`}>
         <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4 lg:px-12">
           <button onClick={() => scrollTo('hero')} className={`font-playfair text-2xl font-bold tracking-tight transition-colors ${scrolled ? 'text-[#F5F2EC]' : 'text-white'}`}>
-            LeishCheck
+            TropiScan
           </button>
 
           {/* Desktop links */}
@@ -114,8 +115,8 @@ export default function LandingPage() {
                 Instalar App
               </button>
             )}
-            <button onClick={() => navigate('/app')} className={`border px-5 py-2 text-sm font-semibold uppercase tracking-widest transition-all hover:bg-white hover:text-[#1C2B1E] ${scrolled ? 'border-[#F5F2EC]/40 text-[#F5F2EC]' : 'border-white/40 text-white'}`}>
-              {t('landing.navApp')}
+            <button onClick={() => navigate('/selecionar-doenca')} className={`border px-5 py-2 text-sm font-semibold uppercase tracking-widest transition-all hover:bg-white hover:text-[#1C2B1E] ${scrolled ? 'border-[#F5F2EC]/40 text-[#F5F2EC]' : 'border-white/40 text-white'}`}>
+              Iniciar Triagem
             </button>
           </div>
 
@@ -143,8 +144,8 @@ export default function LandingPage() {
                   Instalar App
                 </button>
               )}
-              <button onClick={() => { setMenuOpen(false); navigate('/app'); }} className="mt-2 border border-white/30 px-5 py-2.5 text-sm font-semibold uppercase tracking-widest text-white hover:bg-white hover:text-[#1C2B1E]">
-                {t('landing.navApp')}
+              <button onClick={() => { setMenuOpen(false); navigate('/selecionar-doenca'); }} className="mt-2 border border-white/30 px-5 py-2.5 text-sm font-semibold uppercase tracking-widest text-white hover:bg-white hover:text-[#1C2B1E]">
+                Iniciar Triagem
               </button>
             </div>
           </motion.div>
@@ -162,25 +163,30 @@ export default function LandingPage() {
           initial="hidden" animate="visible" variants={stagger}
           className="relative z-10 mx-auto flex max-w-4xl flex-col items-center gap-8 px-6 text-center"
         >
+          {/* Logo */}
+          <motion.div variants={fadeUp} className="mb-4">
+            <img src={logoTropiScan} alt="TropiScan" className="h-20 mx-auto" />
+          </motion.div>
+
           <motion.p variants={fadeUp} className="text-sm font-medium uppercase tracking-[0.3em] text-white/60">
-            {t('landing.heroTag')}
+            Portal de Doenças Negligenciadas
           </motion.p>
           <motion.h1 variants={fadeUp} className="font-playfair text-5xl font-bold leading-[1.1] text-white sm:text-6xl lg:text-8xl">
-            {t('landing.heroTitle1')}
+            América Latina
             <br />
-            <span className="italic text-[#A5D6A7]">{t('landing.heroTitle2')}</span>
+            <span className="italic text-[#A5D6A7]">Mais Saudável</span>
           </motion.h1>
           <motion.p variants={fadeUp} className="max-w-lg text-base leading-relaxed text-white/70 sm:text-lg">
-            {t('landing.heroSub')}
+            Triagem inteligente para Chagas, Hanseníase, Esquistossomose e Leishmaniose com IA e educação em saúde
           </motion.p>
           <motion.button
             variants={fadeUp}
-            onClick={() => navigate('/app')}
+            onClick={() => navigate('/selecionar-doenca')}
             className="mt-4 border-2 border-white px-8 py-4 text-sm font-bold uppercase tracking-[0.2em] text-white transition-all hover:bg-white hover:text-[#1C2B1E]"
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
           >
-            {t('landing.heroCTA')}
+            Iniciar Triagem
           </motion.button>
         </motion.div>
 
@@ -190,7 +196,7 @@ export default function LandingPage() {
           initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.5 }}
           className="absolute bottom-8 left-1/2 flex -translate-x-1/2 flex-col items-center gap-2 text-white/50 hover:text-white/80 transition-colors"
         >
-          <span className="text-xs font-medium uppercase tracking-[0.3em]">{t('landing.heroScroll')}</span>
+          <span className="text-xs font-medium uppercase tracking-[0.3em]">Saiba Mais</span>
           <ChevronDown className="h-5 w-5 animate-bounce-down" />
         </motion.button>
       </section>
@@ -202,13 +208,15 @@ export default function LandingPage() {
           className="mx-auto max-w-4xl px-6 text-center lg:px-12"
         >
           <motion.h2 variants={fadeUp} className="font-playfair text-4xl font-bold leading-tight text-[#1C2B1E] sm:text-5xl lg:text-6xl">
-            {t('landing.missionTitle1')}
+            Doenças negligenciadas têm cura.
             <br />
-            <span className="italic text-[#1C2B1E]/60">{t('landing.missionTitle2')}</span>
+            <span className="italic text-[#1C2B1E]/60">O diagnóstico tardio, não.</span>
           </motion.h2>
           <motion.div variants={fadeUp} className="mx-auto mt-8 h-px w-16 bg-[#1C2B1E]/20" />
           <motion.p variants={fadeUp} className="mx-auto mt-8 max-w-2xl text-base leading-relaxed text-[#1C2B1E]/70 sm:text-lg">
-            {t('landing.missionText')}
+            Milhões de casos de Chagas, Hanseníase, Esquistossomose e Leishmaniose são registrados anualmente na América Latina, 
+            a maioria em comunidades sem acesso a especialistas. O TropiScan leva triagem inteligente a quem mais precisa — 
+            pelo celular, sem internet, em poucos minutos.
           </motion.p>
         </motion.div>
       </section>
@@ -220,15 +228,15 @@ export default function LandingPage() {
           className="mx-auto max-w-6xl px-6 lg:px-12"
         >
           <motion.h2 variants={fadeUp} className="text-center font-playfair text-4xl font-bold text-[#F5F2EC] sm:text-5xl lg:text-6xl">
-            {t('landing.howTitle')}
+            Como Funciona
           </motion.h2>
           <motion.div variants={fadeUp} className="mx-auto mt-4 h-px w-16 bg-[#F5F2EC]/20" />
 
           <div className="mt-16 grid gap-8 sm:grid-cols-3">
             {[
-              { icon: ClipboardList, num: '01', title: t('landing.step1Title'), desc: t('landing.step1Desc') },
-              { icon: Camera, num: '02', title: t('landing.step2Title'), desc: t('landing.step2Desc') },
-              { icon: BarChart3, num: '03', title: t('landing.step3Title'), desc: t('landing.step3Desc') },
+              { icon: ClipboardList, num: '01', title: 'Selecione a Doença', desc: 'Escolha entre Chagas, Hanseníase, Esquistossomose ou Leishmaniose' },
+              { icon: Camera, num: '02', title: 'Responda e Fotografe', desc: 'Questionário clínico e análise de imagem por IA (quando aplicável)' },
+              { icon: BarChart3, num: '03', title: 'Receba Orientação', desc: 'Score de risco, educação em saúde e encaminhamento médico' },
             ].map((step) => (
               <motion.div key={step.num} variants={fadeUp} className="group relative border border-[#F5F2EC]/10 p-8 transition-all hover:border-[#A5D6A7]/30 hover:bg-[#F5F2EC]/5">
                 <span className="font-playfair text-5xl font-bold text-[#A5D6A7]/20">{step.num}</span>
@@ -248,15 +256,15 @@ export default function LandingPage() {
           className="mx-auto max-w-6xl px-6 lg:px-12"
         >
           <motion.h2 variants={fadeUp} className="text-center font-playfair text-4xl font-bold text-[#1C2B1E] sm:text-5xl lg:text-6xl">
-            {t('landing.statsTitle')}
+            Por que Importa
           </motion.h2>
           <motion.div variants={fadeUp} className="mx-auto mt-4 h-px w-16 bg-[#1C2B1E]/20" />
 
           <div className="mt-16 grid gap-12 sm:grid-cols-3">
             {[
-              { ref: c1.ref, value: `${c1.count.toLocaleString('pt-BR')}+`, label: t('landing.stat1') },
-              { ref: c2.ref, value: `${c2.count}%`, label: t('landing.stat2') },
-              { ref: c3.ref, value: `${c3.count} min`, label: t('landing.stat3') },
+              { ref: c1.ref, value: `${c1.count.toLocaleString('pt-BR')}M+`, label: 'Pessoas afetadas na América Latina' },
+              { ref: c2.ref, value: `${c2.count}%`, label: 'Casos em áreas remotas' },
+              { ref: c3.ref, value: `${c3.count} min`, label: 'Tempo de triagem' },
             ].map((stat, i) => (
               <motion.div key={i} variants={fadeUp} ref={stat.ref} className="text-center">
                 <span className="font-playfair text-6xl font-bold text-[#1C2B1E] lg:text-7xl">{stat.value}</span>
@@ -274,16 +282,16 @@ export default function LandingPage() {
           className="mx-auto max-w-6xl px-6 lg:px-12"
         >
           <motion.h2 variants={fadeUp} className="text-center font-playfair text-4xl font-bold text-[#F5F2EC] sm:text-5xl lg:text-6xl">
-            {t('landing.accessTitle')}
+            Acessibilidade Total
           </motion.h2>
           <motion.div variants={fadeUp} className="mx-auto mt-4 h-px w-16 bg-[#F5F2EC]/20" />
 
           <div className="mt-16 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
             {[
-              { Icon: MessageSquare, title: t('landing.access1Title'), desc: t('landing.access1Desc') },
-              { Icon: () => <span className="text-2xl font-bold text-[#A5D6A7]">VL</span>, title: t('landing.access2Title'), desc: t('landing.access2Desc') },
-              { Icon: Globe, title: t('landing.access3Title'), desc: t('landing.access3Desc') },
-              { Icon: WifiOff, title: t('landing.access4Title'), desc: t('landing.access4Desc') },
+              { Icon: MessageSquare, title: 'Áudio Integrado', desc: 'Narração completa para pessoas com deficiência visual' },
+              { Icon: () => <span className="text-2xl font-bold text-[#A5D6A7]">VL</span>, title: 'VLibras', desc: 'Tradução automática para Libras' },
+              { Icon: Globe, title: 'Multilíngue', desc: 'Português, Espanhol e Inglês' },
+              { Icon: WifiOff, title: 'Funciona Offline', desc: 'Sem necessidade de internet' },
             ].map((card, i) => (
               <motion.div key={i} variants={fadeUp} className="border border-[#F5F2EC]/10 p-6 transition-all hover:border-[#A5D6A7]/30 hover:bg-[#F5F2EC]/5">
                 <div className="flex h-12 w-12 items-center justify-center">
@@ -307,10 +315,10 @@ export default function LandingPage() {
             <Quote className="mx-auto h-12 w-12 text-[#1C2B1E]/15 rotate-180" />
           </motion.div>
           <motion.blockquote variants={fadeUp} className="mt-8 font-playfair text-2xl font-medium italic leading-relaxed text-[#1C2B1E] sm:text-3xl lg:text-4xl">
-            {t('landing.testimonialQuote')}
+            "O TropiScan chegou na nossa comunidade quando mais precisávamos. Conseguimos identificar casos suspeitos rapidamente e encaminhar para tratamento. É uma ferramenta que salva vidas."
           </motion.blockquote>
           <motion.div variants={fadeUp} className="mt-8">
-            <p className="text-sm font-semibold uppercase tracking-widest text-[#1C2B1E]/60">{t('landing.testimonialAuthor')}</p>
+            <p className="text-sm font-semibold uppercase tracking-widest text-[#1C2B1E]/60">Dr. Carlos M. — Médico Rural, Minas Gerais</p>
           </motion.div>
         </motion.div>
       </section>
@@ -322,22 +330,52 @@ export default function LandingPage() {
           className="mx-auto max-w-3xl px-6 lg:px-12"
         >
           <motion.h2 variants={fadeUp} className="text-center font-playfair text-4xl font-bold text-[#F5F2EC] sm:text-5xl">
-            {t('landing.faqTitle')}
+            Perguntas Frequentes
           </motion.h2>
           <motion.div variants={fadeUp} className="mx-auto mt-4 h-px w-16 bg-[#F5F2EC]/20" />
 
           <motion.div variants={fadeUp} className="mt-12">
             <Accordion type="single" collapsible className="space-y-2">
-              {[1, 2, 3, 4, 5].map((n) => (
-                <AccordionItem key={n} value={`faq-${n}`} className="border-b border-[#F5F2EC]/10">
-                  <AccordionTrigger className="py-5 text-left font-medium text-[#F5F2EC] hover:text-[#A5D6A7] hover:no-underline [&[data-state=open]]:text-[#A5D6A7]">
-                    {t(`landing.faq${n}Q`)}
-                  </AccordionTrigger>
-                  <AccordionContent className="pb-5 text-sm leading-relaxed text-[#F5F2EC]/60">
-                    {t(`landing.faq${n}A`)}
-                  </AccordionContent>
-                </AccordionItem>
-              ))}
+              <AccordionItem value="faq-1" className="border-b border-[#F5F2EC]/10">
+                <AccordionTrigger className="py-5 text-left font-medium text-[#F5F2EC] hover:text-[#A5D6A7] hover:no-underline [&[data-state=open]]:text-[#A5D6A7]">
+                  O TropiScan substitui uma consulta médica?
+                </AccordionTrigger>
+                <AccordionContent className="pb-5 text-sm leading-relaxed text-[#F5F2EC]/60">
+                  Não. O TropiScan é uma ferramenta auxiliar de triagem. Apenas um profissional de saúde pode confirmar um diagnóstico. Em caso de suspeita, procure uma unidade de saúde.
+                </AccordionContent>
+              </AccordionItem>
+              <AccordionItem value="faq-2" className="border-b border-[#F5F2EC]/10">
+                <AccordionTrigger className="py-5 text-left font-medium text-[#F5F2EC] hover:text-[#A5D6A7] hover:no-underline [&[data-state=open]]:text-[#A5D6A7]">
+                  Meus dados são enviados para algum servidor?
+                </AccordionTrigger>
+                <AccordionContent className="pb-5 text-sm leading-relaxed text-[#F5F2EC]/60">
+                  Não. Todos os dados ficam armazenados exclusivamente no seu dispositivo. Nenhuma informação pessoal é enviada para servidores externos.
+                </AccordionContent>
+              </AccordionItem>
+              <AccordionItem value="faq-3" className="border-b border-[#F5F2EC]/10">
+                <AccordionTrigger className="py-5 text-left font-medium text-[#F5F2EC] hover:text-[#A5D6A7] hover:no-underline [&[data-state=open]]:text-[#A5D6A7]">
+                  Quais doenças o TropiScan pode identificar?
+                </AccordionTrigger>
+                <AccordionContent className="pb-5 text-sm leading-relaxed text-[#F5F2EC]/60">
+                  O TropiScan oferece triagem para quatro doenças negligenciadas: Doença de Chagas, Hanseníase, Esquistossomose e Leishmaniose.
+                </AccordionContent>
+              </AccordionItem>
+              <AccordionItem value="faq-4" className="border-b border-[#F5F2EC]/10">
+                <AccordionTrigger className="py-5 text-left font-medium text-[#F5F2EC] hover:text-[#A5D6A7] hover:no-underline [&[data-state=open]]:text-[#A5D6A7]">
+                  Como funciona a análise por IA?
+                </AccordionTrigger>
+                <AccordionContent className="pb-5 text-sm leading-relaxed text-[#F5F2EC]/60">
+                  O algoritmo foi desenvolvido com base em critérios clínicos reconhecidos e complementado por IA para análise de imagens. No entanto, não substitui avaliação médica profissional.
+                </AccordionContent>
+              </AccordionItem>
+              <AccordionItem value="faq-5" className="border-b border-[#F5F2EC]/10">
+                <AccordionTrigger className="py-5 text-left font-medium text-[#F5F2EC] hover:text-[#A5D6A7] hover:no-underline [&[data-state=open]]:text-[#A5D6A7]">
+                  Quanto custa?
+                </AccordionTrigger>
+                <AccordionContent className="pb-5 text-sm leading-relaxed text-[#F5F2EC]/60">
+                  É completamente gratuito. O TropiScan é um projeto de impacto social para a América Latina.
+                </AccordionContent>
+              </AccordionItem>
             </Accordion>
           </motion.div>
         </motion.div>
@@ -350,18 +388,18 @@ export default function LandingPage() {
           className="mx-auto max-w-4xl px-6 text-center lg:px-12"
         >
           <motion.h2 variants={fadeUp} className="font-playfair text-4xl font-bold leading-tight text-[#1C2B1E] sm:text-5xl lg:text-6xl">
-            {t('landing.footerTitle1')}
+            Cuide da sua saúde.
             <br />
-            <span className="italic text-[#1C2B1E]/60">{t('landing.footerTitle2')}</span>
+            <span className="italic text-[#1C2B1E]/60">Onde você estiver.</span>
           </motion.h2>
           <motion.button
             variants={fadeUp}
-            onClick={() => navigate('/app')}
+            onClick={() => navigate('/selecionar-doenca')}
             className="mt-10 border-2 border-[#1C2B1E] px-8 py-4 text-sm font-bold uppercase tracking-[0.2em] text-[#1C2B1E] transition-all hover:bg-[#1C2B1E] hover:text-[#F5F2EC]"
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
           >
-            {t('landing.heroCTA')}
+            Iniciar Triagem
           </motion.button>
         </motion.div>
       </section>
@@ -369,8 +407,8 @@ export default function LandingPage() {
       {/* Footer */}
       <footer className="border-t border-[#1C2B1E]/10 bg-[#F5F2EC] px-6 py-8">
         <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-4 sm:flex-row">
-          <span className="font-playfair text-lg font-bold text-[#1C2B1E]">LeishCheck</span>
-          <p className="text-xs text-[#1C2B1E]/40">© {new Date().getFullYear()} LeishCheck — {t('landing.footerDisclaimer')}</p>
+          <span className="font-playfair text-lg font-bold text-[#1C2B1E]">TropiScan</span>
+          <p className="text-xs text-[#1C2B1E]/40">© {new Date().getFullYear()} TropiScan — Portal de Doenças Negligenciadas da América Latina</p>
         </div>
       </footer>
     </div>

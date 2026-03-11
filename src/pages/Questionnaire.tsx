@@ -1,8 +1,7 @@
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useLeishCheckStore } from '@/store/useLeishCheckStore';
+import { useTropiScanStore } from '@/store/useTropiScanStore';
 import { speakText } from '@/components/AudioToggle';
-import { questions } from '@/data/questions';
 import { ArrowLeft, Check, X, Stethoscope } from 'lucide-react';
 import AnimatedPage from '@/components/AnimatedPage';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -11,20 +10,21 @@ import { useTranslation } from 'react-i18next';
 
 export default function Questionnaire() {
   const navigate = useNavigate();
-  const { currentQuestion, answers, setAnswer, nextQuestion, prevQuestion, audioEnabled } = useLeishCheckStore();
+  const { currentQuestion, answers, setAnswer, nextQuestion, prevQuestion, audioEnabled, getCurrentQuestions } = useTropiScanStore();
   const prefersReduced = useReducedMotion();
   const { t } = useTranslation();
 
+  const questions = getCurrentQuestions();
   const q = questions[currentQuestion];
   const progress = ((currentQuestion + 1) / questions.length) * 100;
   const currentAnswer = answers.find((a) => a.questionIndex === currentQuestion);
-  const questionText = t(`questionnaire.q${currentQuestion + 1}`);
+  const questionText = q?.text || '';
 
   useEffect(() => {
-    if (audioEnabled) {
-      speakText(`${t('questionnaire.audioPrefix', { number: currentQuestion + 1 })} ${questionText}`);
+    if (audioEnabled && q) {
+      speakText(`Pergunta ${currentQuestion + 1}. ${questionText}`);
     }
-  }, [currentQuestion, audioEnabled, questionText, t]);
+  }, [currentQuestion, audioEnabled, questionText, q]);
 
   const handleAnswer = (answer: boolean) => {
     setAnswer(currentQuestion, answer);
@@ -47,12 +47,10 @@ export default function Questionnaire() {
             <div className="flex-1 min-w-0">
               <div className="flex items-center gap-2">
                 <Stethoscope className="h-5 w-5 text-primary shrink-0" />
-                <h1 className="text-2xl font-bold text-gradient truncate">{t('questionnaire.title')}</h1>
+                <h1 className="text-2xl font-bold text-gradient truncate">Questionário</h1>
               </div>
               <p className="text-sm text-muted-foreground mt-0.5">
-                {t('questionnaire.questionOf', { current: currentQuestion + 1, total: questions.length }) !== `questionnaire.questionOf`
-                  ? t('questionnaire.questionOf', { current: currentQuestion + 1, total: questions.length })
-                  : `${currentQuestion + 1} de ${questions.length}`}
+                {`${currentQuestion + 1} de ${questions.length}`}
               </p>
             </div>
           </div>
@@ -79,7 +77,7 @@ export default function Questionnaire() {
             className="glass-card flex flex-col items-center gap-6 p-8 text-center"
             style={{ boxShadow: '0 16px 48px -12px hsl(152 56% 34% / 0.12)' }}
           >
-            <div className="icon-circle h-16 w-16"><span className="text-3xl" role="img" aria-hidden="true">{q.icon}</span></div>
+            <div className="icon-circle h-16 w-16"><span className="text-3xl" role="img" aria-hidden="true">{q?.icon}</span></div>
             <p className="text-xl font-semibold leading-relaxed text-card-foreground">{questionText}</p>
           </motion.div>
         </AnimatePresence>
@@ -91,7 +89,7 @@ export default function Questionnaire() {
             whileTap={prefersReduced ? {} : { scale: 0.92 }}
             transition={{ type: 'spring', stiffness: 400, damping: 17 }}
           >
-            <Check className="h-6 w-6" /> {t('questionnaire.yes')}
+            <Check className="h-6 w-6" /> Sim
           </motion.button>
           <motion.button
             onClick={() => handleAnswer(false)}
@@ -99,7 +97,7 @@ export default function Questionnaire() {
             whileTap={prefersReduced ? {} : { scale: 0.92 }}
             transition={{ type: 'spring', stiffness: 400, damping: 17 }}
           >
-            <X className="h-6 w-6" /> {t('questionnaire.no')}
+            <X className="h-6 w-6" /> Não
           </motion.button>
         </div>
       </div>

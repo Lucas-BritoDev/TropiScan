@@ -5,6 +5,16 @@ export interface UserData {
   state?: string;
 }
 
+export type DiseaseType = 'chagas' | 'hanseniase' | 'esquistossomose';
+
+export interface Disease {
+  id: DiseaseType;
+  name: string;
+  description: string;
+  icon: string;
+  color: string;
+}
+
 export interface QuestionAnswer {
   questionIndex: number;
   answer: boolean;
@@ -45,4 +55,5 @@ export interface Session {
   imageBase64?: string;
   result?: RiskResult;
   completedAt?: string;
+  diseaseType?: DiseaseType;
 }

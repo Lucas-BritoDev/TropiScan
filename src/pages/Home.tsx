@@ -1,17 +1,17 @@
 import { useNavigate } from 'react-router-dom';
-import { useLeishCheckStore } from '@/store/useLeishCheckStore';
+import { useTropiScanStore } from '@/store/useTropiScanStore';
 import { speakText } from '@/components/AudioToggle';
 import { useEffect } from 'react';
 import { BookOpen, History, Stethoscope, ShieldCheck } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import logoLeishCheck from '@/assets/logo-leishcheck.png';
+import logoTropiScan from '@/assets/logo-tropiscan.svg';
 import AnimatedPage from '@/components/AnimatedPage';
 import { motion } from 'framer-motion';
 import { useReducedMotion } from '@/hooks/useReducedMotion';
 import { useTranslation } from 'react-i18next';
 
 export default function Home() {
-  const { audioEnabled, checkConsentValid } = useLeishCheckStore();
+  const { audioEnabled, checkConsentValid } = useTropiScanStore();
   const navigate = useNavigate();
   const prefersReduced = useReducedMotion();
   const { t } = useTranslation();
@@ -40,8 +40,8 @@ export default function Home() {
           aria-label={t('nav.backToHome')}
         >
           <img 
-            src={logoLeishCheck} 
-            alt="Logo LeishCheck" 
+            src={logoTropiScan} 
+            alt="Logo TropiScan" 
             className="h-full w-full object-contain" 
           />
         </motion.div>

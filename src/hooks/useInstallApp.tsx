@@ -134,7 +134,7 @@ export function InstallAppModal({
                 <MonitorSmartphone className="h-6 w-6 text-primary" />
               </div>
               <div>
-                <h3 className="font-playfair text-xl font-bold text-foreground">Instalar LeishCheck</h3>
+                <h3 className="font-playfair text-xl font-bold text-foreground">Instalar TropiScan</h3>
                 <p className="text-sm text-muted-foreground">Acesso rápido e offline.</p>
               </div>
             </div>
@@ -199,7 +199,7 @@ export function InstallAppModal({
                 <div className="rounded-2xl bg-muted/50 p-4">
                   <h4 className="mb-3 font-semibold text-foreground">Como instalar no Computador:</h4>
                   <p className="text-sm text-muted-foreground mb-3">
-                    Você pode instalar o LeishCheck direto no seu computador para usá-lo como um programa nativo.
+                    Você pode instalar o TropiScan direto no seu computador para usá-lo como um programa nativo.
                   </p>
                   <ol className="space-y-3 text-sm text-muted-foreground">
                     <li className="flex items-center gap-3">
