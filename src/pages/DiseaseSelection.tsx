@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ArrowLeft, ChevronRight } from 'lucide-react';
+import { ChevronRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { useTropiScanStore } from '@/store/useTropiScanStore';
@@ -24,8 +24,12 @@ export default function DiseaseSelection() {
 
   const handleDiseaseSelect = (diseaseId: DiseaseType) => {
     setLocalSelectedDisease(diseaseId);
-    setSelectedDisease(diseaseId);
+    
+    // Reset completo da triagem antes de definir nova doença
     resetTriagem();
+    
+    // Define a nova doença
+    setSelectedDisease(diseaseId);
     
     // Navigate to consent page after a brief delay
     setTimeout(() => {
@@ -44,15 +48,6 @@ export default function DiseaseSelection() {
         >
           {/* Header */}
           <motion.div variants={fadeUp} className="text-center mb-12">
-            <Button
-              variant="ghost"
-              onClick={() => navigate('/')}
-              className="mb-6 text-teal-600 hover:text-teal-700"
-            >
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Voltar ao início
-            </Button>
-            
             <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">
               Selecione a Doença
             </h1>
@@ -61,42 +56,133 @@ export default function DiseaseSelection() {
             </p>
           </motion.div>
 
-          {/* Disease Cards */}
-          <motion.div variants={stagger} className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
-            {diseases.map((disease) => (
-              <motion.div key={disease.id} variants={fadeUp}>
+          {/* Disease Cards - 2 em cima, 2 embaixo */}
+          <motion.div variants={stagger} className="space-y-6 mb-8">
+            {/* Primeira linha - 2 cards */}
+            <div className="grid md:grid-cols-2 gap-6">
+              {diseases.slice(0, 2).map((disease) => (
+                <motion.div key={disease.id} variants={fadeUp}>
+                  <Card 
+                    className={`cursor-pointer transition-all duration-300 hover:shadow-lg hover:scale-105 border-2 ${
+                      selectedDisease === disease.id 
+                        ? 'border-teal-500 bg-teal-50 dark:bg-teal-900/20' 
+                        : 'border-gray-200 hover:border-teal-300'
+                    }`}
+                    onClick={() => handleDiseaseSelect(disease.id)}
+                  >
+                    <CardHeader className="text-center pb-4">
+                      <div 
+                        className="text-6xl mb-4 mx-auto w-20 h-20 rounded-full flex items-center justify-center"
+                        style={{ backgroundColor: `${disease.color}20` }}
+                      >
+                        {disease.icon}
+                      </div>
+                      <CardTitle 
+                        className="text-xl font-bold"
+                        style={{ color: disease.color }}
+                      >
+                        {disease.name}
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <CardDescription className="text-center text-gray-600 dark:text-gray-300 mb-4">
+                        {disease.description}
+                      </CardDescription>
+                      <div className="flex justify-center">
+                        <Button 
+                          variant="outline" 
+                          size="sm"
+                          className="group"
+                          style={{ borderColor: disease.color, color: disease.color }}
+                        >
+                          Iniciar Triagem
+                          <ChevronRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
+                        </Button>
+                      </div>
+                    </CardContent>
+                  </Card>
+                </motion.div>
+              ))}
+            </div>
+
+            {/* Segunda linha - 2 cards */}
+            <div className="grid md:grid-cols-2 gap-6">
+              {/* Terceiro card (se existir) */}
+              {diseases.slice(2, 3).map((disease) => (
+                <motion.div key={disease.id} variants={fadeUp}>
+                  <Card 
+                    className={`cursor-pointer transition-all duration-300 hover:shadow-lg hover:scale-105 border-2 ${
+                      selectedDisease === disease.id 
+                        ? 'border-teal-500 bg-teal-50 dark:bg-teal-900/20' 
+                        : 'border-gray-200 hover:border-teal-300'
+                    }`}
+                    onClick={() => handleDiseaseSelect(disease.id)}
+                  >
+                    <CardHeader className="text-center pb-4">
+                      <div 
+                        className="text-6xl mb-4 mx-auto w-20 h-20 rounded-full flex items-center justify-center"
+                        style={{ backgroundColor: `${disease.color}20` }}
+                      >
+                        {disease.icon}
+                      </div>
+                      <CardTitle 
+                        className="text-xl font-bold"
+                        style={{ color: disease.color }}
+                      >
+                        {disease.name}
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <CardDescription className="text-center text-gray-600 dark:text-gray-300 mb-4">
+                        {disease.description}
+                      </CardDescription>
+                      <div className="flex justify-center">
+                        <Button 
+                          variant="outline" 
+                          size="sm"
+                          className="group"
+                          style={{ borderColor: disease.color, color: disease.color }}
+                        >
+                          Iniciar Triagem
+                          <ChevronRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
+                        </Button>
+                      </div>
+                    </CardContent>
+                  </Card>
+                </motion.div>
+              ))}
+
+              {/* Leishmaniasis card */}
+              <motion.div variants={fadeUp}>
                 <Card 
-                  className={`cursor-pointer transition-all duration-300 hover:shadow-lg hover:scale-105 border-2 ${
-                    selectedDisease === disease.id 
-                      ? 'border-teal-500 bg-teal-50 dark:bg-teal-900/20' 
-                      : 'border-gray-200 hover:border-teal-300'
-                  }`}
-                  onClick={() => handleDiseaseSelect(disease.id)}
+                  className="cursor-pointer transition-all duration-300 hover:shadow-lg hover:scale-105 border-2 border-gray-200 hover:border-green-300"
+                  onClick={() => {
+                    // Reset completo da triagem antes de definir leishmaniose
+                    resetTriagem();
+                    
+                    // Define leishmaniose (null represents leishmaniasis - original disease)
+                    setSelectedDisease(null); 
+                    
+                    setTimeout(() => navigate('/consentimento'), 300);
+                  }}
                 >
                   <CardHeader className="text-center pb-4">
-                    <div 
-                      className="text-6xl mb-4 mx-auto w-20 h-20 rounded-full flex items-center justify-center"
-                      style={{ backgroundColor: `${disease.color}20` }}
-                    >
-                      {disease.icon}
+                    <div className="text-6xl mb-4 mx-auto w-20 h-20 rounded-full bg-green-100 flex items-center justify-center">
+                      🦟
                     </div>
-                    <CardTitle 
-                      className="text-xl font-bold"
-                      style={{ color: disease.color }}
-                    >
-                      {disease.name}
+                    <CardTitle className="text-xl font-bold text-green-600">
+                      Leishmaniose
                     </CardTitle>
                   </CardHeader>
                   <CardContent>
                     <CardDescription className="text-center text-gray-600 dark:text-gray-300 mb-4">
-                      {disease.description}
+                      Doença parasitária transmitida por flebotomíneos (mosquito-palha)
                     </CardDescription>
                     <div className="flex justify-center">
                       <Button 
                         variant="outline" 
                         size="sm"
-                        className="group"
-                        style={{ borderColor: disease.color, color: disease.color }}
+                        className="group border-green-500 text-green-600"
                       >
                         Iniciar Triagem
                         <ChevronRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
@@ -105,43 +191,7 @@ export default function DiseaseSelection() {
                   </CardContent>
                 </Card>
               </motion.div>
-            ))}
-          </motion.div>
-
-          {/* Additional Disease - Leishmaniasis */}
-          <motion.div variants={fadeUp}>
-            <Card 
-              className="cursor-pointer transition-all duration-300 hover:shadow-lg hover:scale-105 border-2 border-gray-200 hover:border-green-300"
-              onClick={() => {
-                setSelectedDisease(null); // null represents leishmaniasis (original disease)
-                resetTriagem();
-                setTimeout(() => navigate('/consentimento'), 300);
-              }}
-            >
-              <CardHeader className="text-center pb-4">
-                <div className="text-6xl mb-4 mx-auto w-20 h-20 rounded-full bg-green-100 flex items-center justify-center">
-                  🦟
-                </div>
-                <CardTitle className="text-xl font-bold text-green-600">
-                  Leishmaniose
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <CardDescription className="text-center text-gray-600 dark:text-gray-300 mb-4">
-                  Doença parasitária transmitida por flebotomíneos (mosquito-palha)
-                </CardDescription>
-                <div className="flex justify-center">
-                  <Button 
-                    variant="outline" 
-                    size="sm"
-                    className="group border-green-500 text-green-600"
-                  >
-                    Iniciar Triagem
-                    <ChevronRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
+            </div>
           </motion.div>
 
           {/* Info Section */}

@@ -4,7 +4,7 @@ import { speakText } from '@/components/AudioToggle';
 import { useEffect } from 'react';
 import { BookOpen, History, Stethoscope, ShieldCheck } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import logoTropiScan from '@/assets/logo-tropiscan.svg';
+import logoTropiScan from '@/assets/tropiscan.jpeg';
 import AnimatedPage from '@/components/AnimatedPage';
 import { motion } from 'framer-motion';
 import { useReducedMotion } from '@/hooks/useReducedMotion';

@@ -1,0 +1,43 @@
+<svg width="1920" height="1080" viewBox="0 0 1920 1080" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- Gradiente de overlay para o hero -->
+    <radialGradient id="heroOverlay" cx="50%" cy="40%" r="80%">
+      <stop offset="0%" style="stop-color:#000000;stop-opacity:0.1" />
+      <stop offset="50%" style="stop-color:#1a4d3a;stop-opacity:0.3" />
+      <stop offset="100%" style="stop-color:#000000;stop-opacity:0.6" />
+    </radialGradient>
+    
+    <!-- Padrão de folhas tropicais -->
+    <pattern id="tropicalLeaves" x="0" y="0" width="300" height="300" patternUnits="userSpaceOnUse">
+      <!-- Folha 1 -->
+      <path d="M100,150 Q120,100 150,120 Q180,140 160,180 Q140,200 100,150" fill="#6b9b7a" opacity="0.05"/>
+      <!-- Folha 2 -->
+      <path d="M200,100 Q230,80 250,110 Q270,140 240,160 Q210,140 200,100" fill="#1a4d3a" opacity="0.04"/>
+      <!-- Folha 3 -->
+      <path d="M50,250 Q80,220 110,240 Q140,260 120,290 Q90,280 50,250" fill="#6b9b7a" opacity="0.03"/>
+    </pattern>
+    
+    <!-- Padrão de partículas -->
+    <pattern id="particles" x="0" y="0" width="200" height="200" patternUnits="userSpaceOnUse">
+      <circle cx="50" cy="50" r="2" fill="#ffffff" opacity="0.1"/>
+      <circle cx="150" cy="100" r="1.5" fill="#6b9b7a" opacity="0.08"/>
+      <circle cx="100" cy="150" r="1" fill="#ffffff" opacity="0.06"/>
+      <circle cx="30" cy="120" r="1.5" fill="#6b9b7a" opacity="0.07"/>
+      <circle cx="170" cy="30" r="1" fill="#ffffff" opacity="0.05"/>
+    </pattern>
+  </defs>
+  
+  <!-- Overlay base -->
+  <rect width="1920" height="1080" fill="url(#heroOverlay)"/>
+  
+  <!-- Padrão de folhas tropicais -->
+  <rect width="1920" height="1080" fill="url(#tropicalLeaves)"/>
+  
+  <!-- Padrão de partículas -->
+  <rect width="1920" height="1080" fill="url(#particles)"/>
+  
+  <!-- Elementos decorativos adicionais -->
+  <ellipse cx="400" cy="300" rx="100" ry="150" fill="#6b9b7a" opacity="0.02" transform="rotate(-20 400 300)"/>
+  <ellipse cx="1500" cy="700" rx="120" ry="180" fill="#1a4d3a" opacity="0.015" transform="rotate(30 1500 700)"/>
+  <ellipse cx="800" cy="200" rx="80" ry="120" fill="#6b9b7a" opacity="0.02" transform="rotate(45 800 200)"/>
+</svg>

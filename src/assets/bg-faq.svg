@@ -1,0 +1,38 @@
+<svg width="1920" height="1080" viewBox="0 0 1920 1080" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- Gradiente escuro para FAQ -->
+    <linearGradient id="faqGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1a4d3a;stop-opacity:1" />
+      <stop offset="30%" style="stop-color:#2d5a47;stop-opacity:1" />
+      <stop offset="70%" style="stop-color:#1a4d3a;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0f2e1f;stop-opacity:1" />
+    </linearGradient>
+    
+    <!-- Padrão de pontos de interrogação -->
+    <pattern id="questionPattern" x="0" y="0" width="120" height="120" patternUnits="userSpaceOnUse">
+      <path d="M60,30 Q70,20 80,30 Q80,40 70,45 L70,50 M70,60 L70,65" stroke="#6b9b7a" stroke-width="2" fill="none" opacity="0.04"/>
+    </pattern>
+    
+    <!-- Padrão de documentos/informação -->
+    <pattern id="docPattern" x="0" y="0" width="80" height="80" patternUnits="userSpaceOnUse">
+      <rect x="25" y="20" width="30" height="40" fill="none" stroke="#6b9b7a" stroke-width="1" opacity="0.03"/>
+      <line x1="30" y1="30" x2="45" y2="30" stroke="#6b9b7a" stroke-width="1" opacity="0.025"/>
+      <line x1="30" y1="35" x2="50" y2="35" stroke="#6b9b7a" stroke-width="1" opacity="0.025"/>
+      <line x1="30" y1="40" x2="45" y2="40" stroke="#6b9b7a" stroke-width="1" opacity="0.025"/>
+    </pattern>
+  </defs>
+  
+  <!-- Fundo base -->
+  <rect width="1920" height="1080" fill="url(#faqGradient)"/>
+  
+  <!-- Padrão de perguntas -->
+  <rect width="1920" height="1080" fill="url(#questionPattern)"/>
+  
+  <!-- Padrão de documentos -->
+  <rect width="1920" height="1080" fill="url(#docPattern)"/>
+  
+  <!-- Elementos decorativos -->
+  <circle cx="250" cy="250" r="30" fill="#6b9b7a" opacity="0.03"/>
+  <circle cx="1650" cy="750" r="40" fill="#6b9b7a" opacity="0.025"/>
+  <circle cx="1100" cy="300" r="25" fill="#6b9b7a" opacity="0.035"/>
+</svg>

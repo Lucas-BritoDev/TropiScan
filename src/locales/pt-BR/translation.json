@@ -1,9 +1,12 @@
 {
   "app": {
-    "name": "LeishCheck",
+    "name": "TropiScan",
     "tagline": "Cuide da sua saúde.\nSimples, rápido e gratuito.",
     "version": "v1.0",
     "disclaimer": "Esta ferramenta não substitui consulta médica presencial."
+  },
+  "common": {
+    "backToHome": "Voltar ao início"
   },
   "nav": {
     "start": "Iniciar Triagem",
@@ -125,7 +128,7 @@
     "es": "Español (América Latina)"
   },
   "install": {
-    "title": "Instale o LeishCheck",
+    "title": "Instale o TropiScan",
     "description": "Acesse rapidamente pela tela inicial do seu celular",
     "button": "Instalar",
     "dismiss": "Agora não"
@@ -138,7 +141,7 @@
     "disclaimer": "Análise assistida por IA — não substitui diagnóstico médico profissional."
   },
   "audio": {
-    "home": "Bem-vindo ao LeishCheck. Cuide da sua saúde. Simples, rápido e gratuito. Toque em Iniciar Triagem para começar.",
+    "home": "Bem-vindo ao TropiScan. Cuide da sua saúde. Simples, rápido e gratuito. Toque em Iniciar Triagem para começar.",
     "consent": "Sua privacidade é importante. Por favor, leia o termo de consentimento abaixo e role até o final para continuar.",
     "userData": "Informe seus dados básicos. Todos os campos são opcionais. Toque em Continuar quando estiver pronto.",
     "imageUpload": "Se desejar, tire uma foto da lesão ou selecione uma imagem da galeria. Você também pode pular esta etapa.",
@@ -156,7 +159,7 @@
     "heroScroll": "Explorar",
     "missionTitle1": "A leishmaniose tem cura.",
     "missionTitle2": "O diagnóstico tardio, não.",
-    "missionText": "Mais de 20.000 casos são registrados anualmente no Brasil, a maioria em comunidades sem acesso a dermatologistas. O LeishCheck leva triagem inteligente a quem mais precisa — pelo celular, sem internet, em 3 minutos.",
+    "missionText": "Mais de 20.000 casos são registrados anualmente no Brasil, a maioria em comunidades sem acesso a dermatologistas. O TropiScan leva triagem inteligente a quem mais precisa — pelo celular, sem internet, em 3 minutos.",
     "howTitle": "Como Funciona",
     "step1Title": "Responda",
     "step1Desc": "10 perguntas rápidas sobre seus sintomas, hábitos e localização. Leva menos de 2 minutos.",
@@ -180,8 +183,8 @@
     "testimonialQuote": "Eu não sabia que aquela ferida podia ser leishmaniose. Graças à triagem, procurei a UBS a tempo.",
     "testimonialAuthor": "Maria S. — Comunidade Ribeirinha, AM",
     "faqTitle": "Perguntas Frequentes",
-    "faq1Q": "O LeishCheck substitui uma consulta médica?",
-    "faq1A": "Não. O LeishCheck é uma ferramenta auxiliar de triagem. Apenas um profissional de saúde pode confirmar um diagnóstico. Em caso de suspeita, procure uma UBS.",
+    "faq1Q": "O TropiScan substitui uma consulta médica?",
+    "faq1A": "Não. O TropiScan é uma ferramenta auxiliar de triagem. Apenas um profissional de saúde pode confirmar um diagnóstico. Em caso de suspeita, procure uma UBS.",
     "faq2Q": "Meus dados são enviados para algum servidor?",
     "faq2A": "Não. Todos os dados ficam armazenados exclusivamente no seu dispositivo. Nenhuma informação pessoal é enviada para servidores externos.",
     "faq3Q": "Preciso de internet para usar?",
@@ -189,7 +192,7 @@
     "faq4Q": "A triagem é confiável?",
     "faq4A": "O algoritmo foi desenvolvido com base em critérios clínicos reconhecidos e complementado por IA. No entanto, não substitui avaliação médica profissional.",
     "faq5Q": "Quanto custa?",
-    "faq5A": "É completamente gratuito. O LeishCheck é um projeto de impacto social.",
+    "faq5A": "É completamente gratuito. O TropiScan é um projeto de impacto social.",
     "footerTitle1": "Cuide da sua saúde.",
     "footerTitle2": "Onde você estiver.",
     "footerDisclaimer": "Ferramenta auxiliar de triagem. Não substitui consulta médica."

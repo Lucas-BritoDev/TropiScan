@@ -221,7 +221,7 @@ export const useTropiScanStore = create<TropiScanState>()(
           answers: [],
           imageBase64: null,
           result: null,
-          selectedDisease: null,
+          // Não resetar selectedDisease aqui para manter a seleção
         }),
     }),
     {

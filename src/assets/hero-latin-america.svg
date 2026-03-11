@@ -1,0 +1,102 @@
+<svg width="1920" height="1080" viewBox="0 0 1920 1080" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- Gradiente principal representando a América Latina -->
+    <linearGradient id="latinAmericaGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0f4c3a;stop-opacity:1" />
+      <stop offset="20%" style="stop-color:#1a5d47;stop-opacity:1" />
+      <stop offset="40%" style="stop-color:#2d7a5f;stop-opacity:1" />
+      <stop offset="60%" style="stop-color:#4a9b7a;stop-opacity:1" />
+      <stop offset="80%" style="stop-color:#6bb896;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#8dd3b2;stop-opacity:1" />
+    </linearGradient>
+    
+    <!-- Gradiente de overlay para profundidade -->
+    <radialGradient id="healthOverlay" cx="50%" cy="30%" r="80%">
+      <stop offset="0%" style="stop-color:#ffffff;stop-opacity:0.05" />
+      <stop offset="50%" style="stop-color:#6bb896;stop-opacity:0.1" />
+      <stop offset="100%" style="stop-color:#0f4c3a;stop-opacity:0.4" />
+    </radialGradient>
+    
+    <!-- Padrão de folhas da Amazônia -->
+    <pattern id="amazonLeaves" x="0" y="0" width="400" height="400" patternUnits="userSpaceOnUse">
+      <!-- Folha grande -->
+      <path d="M150,200 Q180,150 220,180 Q260,210 240,260 Q200,290 150,200" fill="#6bb896" opacity="0.08"/>
+      <!-- Folha média -->
+      <path d="M300,120 Q330,90 360,120 Q390,150 370,180 Q340,160 300,120" fill="#4a9b7a" opacity="0.06"/>
+      <!-- Folha pequena -->
+      <path d="M80,320 Q100,300 120,320 Q140,340 120,360 Q100,350 80,320" fill="#6bb896" opacity="0.07"/>
+      <!-- Folha tropical -->
+      <path d="M250,350 Q280,320 310,350 Q340,380 320,410 Q290,400 250,350" fill="#2d7a5f" opacity="0.05"/>
+    </pattern>
+    
+    <!-- Padrão de montanhas dos Andes -->
+    <pattern id="andesMountains" x="0" y="0" width="600" height="300" patternUnits="userSpaceOnUse">
+      <path d="M0,250 L100,150 L200,200 L300,100 L400,180 L500,120 L600,250 L600,300 L0,300 Z" fill="#1a5d47" opacity="0.04"/>
+      <path d="M50,270 L150,170 L250,220 L350,120 L450,200 L550,140 L600,270" fill="#0f4c3a" opacity="0.03"/>
+    </pattern>
+    
+    <!-- Padrão de ondas do oceano -->
+    <pattern id="oceanWaves" x="0" y="0" width="300" height="100" patternUnits="userSpaceOnUse">
+      <path d="M0,50 Q75,30 150,50 Q225,70 300,50" stroke="#4a9b7a" stroke-width="2" fill="none" opacity="0.06"/>
+      <path d="M0,70 Q75,50 150,70 Q225,90 300,70" stroke="#6bb896" stroke-width="1.5" fill="none" opacity="0.04"/>
+    </pattern>
+    
+    <!-- Padrão de símbolos de saúde -->
+    <pattern id="healthSymbols" x="0" y="0" width="200" height="200" patternUnits="userSpaceOnUse">
+      <!-- Cruz da saúde -->
+      <path d="M95,85 L105,85 L105,95 L115,95 L115,105 L105,105 L105,115 L95,115 L95,105 L85,105 L85,95 L95,95 Z" fill="#ffffff" opacity="0.08"/>
+      <!-- Coração -->
+      <path d="M150,130 C145,120 135,120 135,130 C135,140 150,155 150,155 C150,155 165,140 165,130 C165,120 155,120 150,130 Z" fill="#6bb896" opacity="0.06"/>
+    </pattern>
+    
+    <!-- Padrão de conexões/comunidade -->
+    <pattern id="communityNetwork" x="0" y="0" width="250" height="250" patternUnits="userSpaceOnUse">
+      <circle cx="80" cy="80" r="4" fill="#ffffff" opacity="0.1"/>
+      <circle cx="170" cy="120" r="4" fill="#6bb896" opacity="0.08"/>
+      <circle cx="120" cy="180" r="4" fill="#ffffff" opacity="0.09"/>
+      <line x1="80" y1="80" x2="170" y2="120" stroke="#6bb896" stroke-width="1" opacity="0.05"/>
+      <line x1="170" y1="120" x2="120" y2="180" stroke="#ffffff" stroke-width="1" opacity="0.04"/>
+      <line x1="120" y1="180" x2="80" y2="80" stroke="#6bb896" stroke-width="1" opacity="0.05"/>
+    </pattern>
+  </defs>
+  
+  <!-- Fundo base com gradiente da América Latina -->
+  <rect width="1920" height="1080" fill="url(#latinAmericaGradient)"/>
+  
+  <!-- Montanhas dos Andes -->
+  <rect width="1920" height="1080" fill="url(#andesMountains)"/>
+  
+  <!-- Folhas da Amazônia -->
+  <rect width="1920" height="1080" fill="url(#amazonLeaves)"/>
+  
+  <!-- Ondas do oceano -->
+  <rect width="1920" height="1080" fill="url(#oceanWaves)"/>
+  
+  <!-- Símbolos de saúde -->
+  <rect width="1920" height="1080" fill="url(#healthSymbols)"/>
+  
+  <!-- Rede de comunidade -->
+  <rect width="1920" height="1080" fill="url(#communityNetwork)"/>
+  
+  <!-- Overlay de saúde -->
+  <rect width="1920" height="1080" fill="url(#healthOverlay)"/>
+  
+  <!-- Elementos decorativos representando diversidade e saúde -->
+  <!-- Sol nascente (esperança) -->
+  <circle cx="1600" cy="200" r="80" fill="#ffffff" opacity="0.06"/>
+  <circle cx="1600" cy="200" r="60" fill="#6bb896" opacity="0.04"/>
+  
+  <!-- Formas orgânicas representando vida e saúde -->
+  <ellipse cx="300" cy="300" rx="120" ry="180" fill="#6bb896" opacity="0.03" transform="rotate(-15 300 300)"/>
+  <ellipse cx="1400" cy="700" rx="150" ry="200" fill="#4a9b7a" opacity="0.025" transform="rotate(20 1400 700)"/>
+  <ellipse cx="800" cy="150" rx="100" ry="140" fill="#6bb896" opacity="0.035" transform="rotate(45 800 150)"/>
+  
+  <!-- Elementos representando cidades saudáveis -->
+  <rect x="200" y="800" width="8" height="40" fill="#ffffff" opacity="0.08" rx="2"/>
+  <rect x="215" y="780" width="8" height="60" fill="#6bb896" opacity="0.06" rx="2"/>
+  <rect x="230" y="790" width="8" height="50" fill="#ffffff" opacity="0.07" rx="2"/>
+  
+  <rect x="1500" y="850" width="8" height="30" fill="#ffffff" opacity="0.08" rx="2"/>
+  <rect x="1515" y="830" width="8" height="50" fill="#6bb896" opacity="0.06" rx="2"/>
+  <rect x="1530" y="840" width="8" height="40" fill="#ffffff" opacity="0.07" rx="2"/>
+</svg>

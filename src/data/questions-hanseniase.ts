@@ -11,7 +11,7 @@ export const hanseniaseQuestions: Question[] = [
     text: 'Há alteração de sensibilidade nas manchas (dormência, formigamento)?',
     icon: '🤚',
     weight: 25,
-    audioText: 'Pergunta 2. Há alteração de sensibilidade nas manchas?',
+    audioText: 'Pergunta 2. Há alteração de sensibilidade nas manchas, como dormência ou formigamento?',
   },
   {
     text: 'Sente dor ou queimação nas áreas afetadas?',

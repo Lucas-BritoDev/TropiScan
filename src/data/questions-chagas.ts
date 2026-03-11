@@ -2,10 +2,10 @@ import { Question } from '@/types/tropiscan';
 
 export const chagasQuestions: Question[] = [
   {
-    text: 'Tipo de construção da sua residência (barro, madeira, alvenaria)?',
+    text: 'Qual o tipo de construção da sua residência?',
     icon: '🏠',
     weight: 10,
-    audioText: 'Pergunta 1. Qual o tipo de construção da sua residência?',
+    audioText: 'Pergunta 1. Qual o tipo de construção da sua residência? Barro, madeira, alvenaria ou outro?',
   },
   {
     text: 'Há frestas ou buracos nas paredes ou telhado da sua casa?',

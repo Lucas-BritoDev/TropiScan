@@ -76,7 +76,7 @@ Criar uma landing page editorial elegante na rota `/` (atual Home vira `/app`). 
 ### Navbar
 
 - Fixa no topo, transparente → blur escuro ao scrollar (>50px)
-- Logo "LeishCheck" (Playfair Display)
+- Logo "TropiScan" (Playfair Display)
 - Links: "Como Funciona", "Por que Importa", "FAQ", "Acessar App"
 - Mobile: hamburguer menu com drawer
 

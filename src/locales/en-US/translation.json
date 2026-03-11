@@ -1,9 +1,12 @@
 {
   "app": {
-    "name": "LeishCheck",
+    "name": "TropiScan",
     "tagline": "Take care of your health.\nSimple, fast and free.",
     "version": "v1.0",
     "disclaimer": "This tool does not replace an in-person medical consultation."
+  },
+  "common": {
+    "backToHome": "Back to home"
   },
   "nav": {
     "start": "Start Screening",
@@ -125,7 +128,7 @@
     "es": "Español (América Latina)"
   },
   "install": {
-    "title": "Install LeishCheck",
+    "title": "Install TropiScan",
     "description": "Quick access from your phone's home screen",
     "button": "Install",
     "dismiss": "Not now"
@@ -138,7 +141,7 @@
     "disclaimer": "AI-assisted analysis — does not replace professional medical diagnosis."
   },
   "audio": {
-    "home": "Welcome to LeishCheck. Take care of your health. Simple, fast and free. Tap Start Screening to begin.",
+    "home": "Welcome to TropiScan. Take care of your health. Simple, fast and free. Tap Start Screening to begin.",
     "consent": "Your privacy matters. Please read the consent form below and scroll to the end to continue.",
     "userData": "Enter your basic information. All fields are optional. Tap Continue when you're ready.",
     "imageUpload": "If you wish, take a photo of the lesion or select an image from the gallery. You can also skip this step.",
@@ -156,7 +159,7 @@
     "heroScroll": "Explore",
     "missionTitle1": "Leishmaniasis has a cure.",
     "missionTitle2": "Late diagnosis doesn't.",
-    "missionText": "Over 20,000 cases are recorded annually in Brazil, most in communities without access to dermatologists. LeishCheck brings intelligent screening to those who need it most — on their phone, offline, in 3 minutes.",
+    "missionText": "Over 20,000 cases are recorded annually in Brazil, most in communities without access to dermatologists. TropiScan brings intelligent screening to those who need it most — on their phone, offline, in 3 minutes.",
     "howTitle": "How It Works",
     "step1Title": "Answer",
     "step1Desc": "10 quick questions about your symptoms, habits and location. Takes less than 2 minutes.",
@@ -180,8 +183,8 @@
     "testimonialQuote": "I didn't know that wound could be leishmaniasis. Thanks to the screening, I sought the health unit in time.",
     "testimonialAuthor": "Maria S. — Riverside Community, AM",
     "faqTitle": "Frequently Asked Questions",
-    "faq1Q": "Does LeishCheck replace a medical consultation?",
-    "faq1A": "No. LeishCheck is an auxiliary screening tool. Only a health professional can confirm a diagnosis. If you suspect, seek a health unit.",
+    "faq1Q": "Does TropiScan replace a medical consultation?",
+    "faq1A": "No. TropiScan is an auxiliary screening tool. Only a health professional can confirm a diagnosis. If you suspect, seek a health unit.",
     "faq2Q": "Is my data sent to any server?",
     "faq2A": "No. All data is stored exclusively on your device. No personal information is sent to external servers.",
     "faq3Q": "Do I need internet to use it?",
@@ -189,7 +192,7 @@
     "faq4Q": "Is the screening reliable?",
     "faq4A": "The algorithm was developed based on recognized clinical criteria and complemented by AI. However, it does not replace professional medical evaluation.",
     "faq5Q": "How much does it cost?",
-    "faq5A": "It's completely free. LeishCheck is a social impact project.",
+    "faq5A": "It's completely free. TropiScan is a social impact project.",
     "footerTitle1": "Take care of your health.",
     "footerTitle2": "Wherever you are.",
     "footerDisclaimer": "Auxiliary screening tool. Does not replace medical consultation."

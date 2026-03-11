@@ -1,0 +1,36 @@
+<svg width="1920" height="1080" viewBox="0 0 1920 1080" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- Gradiente escuro para seção como funciona -->
+    <linearGradient id="darkGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1a4d3a;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#0f2e1f;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#1a4d3a;stop-opacity:1" />
+    </linearGradient>
+    
+    <!-- Padrão de engrenagens/processo -->
+    <pattern id="gearPattern" x="0" y="0" width="150" height="150" patternUnits="userSpaceOnUse">
+      <circle cx="75" cy="75" r="30" fill="none" stroke="#6b9b7a" stroke-width="2" opacity="0.1"/>
+      <circle cx="75" cy="75" r="20" fill="none" stroke="#6b9b7a" stroke-width="1" opacity="0.08"/>
+      <circle cx="75" cy="75" r="10" fill="#6b9b7a" opacity="0.05"/>
+    </pattern>
+    
+    <!-- Padrão de setas/fluxo -->
+    <pattern id="arrowPattern" x="0" y="0" width="80" height="80" patternUnits="userSpaceOnUse">
+      <path d="M20,40 L50,40 M45,35 L50,40 L45,45" stroke="#6b9b7a" stroke-width="1" fill="none" opacity="0.06"/>
+    </pattern>
+  </defs>
+  
+  <!-- Fundo base -->
+  <rect width="1920" height="1080" fill="url(#darkGradient)"/>
+  
+  <!-- Padrão de engrenagens -->
+  <rect width="1920" height="1080" fill="url(#gearPattern)"/>
+  
+  <!-- Padrão de setas -->
+  <rect width="1920" height="1080" fill="url(#arrowPattern)"/>
+  
+  <!-- Elementos decorativos -->
+  <circle cx="300" cy="200" r="50" fill="#6b9b7a" opacity="0.04"/>
+  <circle cx="1600" cy="800" r="70" fill="#6b9b7a" opacity="0.03"/>
+  <circle cx="1200" cy="300" r="40" fill="#6b9b7a" opacity="0.05"/>
+</svg>

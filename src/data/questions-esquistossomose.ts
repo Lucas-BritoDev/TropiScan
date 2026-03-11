@@ -14,7 +14,7 @@ export const esquistossomoseQuestions: Question[] = [
     audioText: 'Pergunta 2. Sua residência possui saneamento básico adequado?',
   },
   {
-    text: 'Já participou de campanhas de tratamento preventivo?',
+    text: 'Já participou de campanhas de tratamento preventivo (quimioterapia)?',
     icon: '💊',
     weight: 10,
     audioText: 'Pergunta 3. Já participou de campanhas de tratamento preventivo?',
@@ -53,7 +53,7 @@ export const esquistossomoseQuestions: Question[] = [
     text: 'Pratica lazer em água doce (rios, lagoas)?',
     icon: '🏖️',
     weight: 15,
-    audioText: 'Pergunta 9. Pratica lazer em água doce?',
+    audioText: 'Pergunta 9. Pratica lazer em água doce, como rios ou lagoas?',
   },
   {
     text: 'Sente cansaço ou anemia frequente?',
