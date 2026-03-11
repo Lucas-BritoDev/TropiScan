@@ -17,7 +17,7 @@ export default defineConfig(({ mode }) => ({
     mode === "development" && componentTagger(),
     VitePWA({
       registerType: "autoUpdate",
-      includeAssets: ["favicon.ico", "icon-192.png", "icon-512.png"],
+      includeAssets: ["tropiscan.jpeg"],
       manifest: {
         name: "TropiScan - Portal de Doenças Negligenciadas",
         short_name: "TropiScan",
@@ -28,8 +28,8 @@ export default defineConfig(({ mode }) => ({
         orientation: "portrait",
         start_url: "/",
         icons: [
-          { src: "icon-192.png", sizes: "192x192", type: "image/png" },
-          { src: "icon-512.png", sizes: "512x512", type: "image/png", purpose: "any maskable" },
+          { src: "tropiscan.jpeg", sizes: "1536x1024", type: "image/jpeg" },
+          { src: "tropiscan.jpeg", sizes: "512x512", type: "image/jpeg", purpose: "any maskable" },
         ],
       },
       workbox: {

@@ -8,27 +8,27 @@ export function InstallPWAButton() {
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
-    // Mostrar o botão após 2 segundos se for instalável
-    if (isInstallable) {
-      const timer = setTimeout(() => {
-        setIsVisible(true);
-      }, 2000);
-      return () => clearTimeout(timer);
-    }
-  }, [isInstallable]);
+    // Sempre mostrar o botão após 2 segundos, independente de estar instalado
+    const timer = setTimeout(() => {
+      setIsVisible(true);
+    }, 2000);
+    return () => clearTimeout(timer);
+  }, []); // Removido isInstallable da dependência
 
   const handleDismiss = () => {
     setIsVisible(false);
-    // Não salvar no localStorage para que apareça novamente na próxima visita
+    // Reaparecer após 30 segundos
+    setTimeout(() => {
+      setIsVisible(true);
+    }, 30000);
   };
 
   const handleInstall = () => {
     handleInstallClick();
-    setIsVisible(false);
+    // NÃO esconder o botão, deixar o modal aberto
   };
 
-  if (!isInstallable) return null;
-
+  // Sempre renderizar, não verificar isInstallable
   return (
     <>
       {/* Botão flutuante */}
@@ -176,8 +176,7 @@ export function InstallPWAButton() {
                       if (deferredPrompt) {
                         triggerNativeInstall();
                       }
-                      setShowModal(false);
-                      setIsVisible(false);
+                      // Não fechar o modal nem esconder o botão
                     }}
                     className="flex-1 bg-primary hover:bg-primary/90 text-primary-foreground px-4 py-2 rounded-lg font-medium transition-colors"
                   >

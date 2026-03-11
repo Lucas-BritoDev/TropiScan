@@ -16,14 +16,13 @@ function isStandalone(): boolean {
 export function useInstallApp() {
   const [deferredPrompt, setDeferredPrompt] = useState<BeforeInstallPromptEvent | null>(null);
   
-  // We ALWAYS show the button if it's not already installed.
-  const [isInstallable, setIsInstallable] = useState(false);
+  // SEMPRE mostrar como instalável
+  const [isInstallable, setIsInstallable] = useState(true);
   const [showModal, setShowModal] = useState(false);
   const [os, setOs] = useState<'ios' | 'android' | 'desktop'>('desktop');
 
   useEffect(() => {
-    // Hide if already installed
-    if (isStandalone()) return;
+    // Sempre considerar instalável
     setIsInstallable(true);
 
     // Detect OS
@@ -38,52 +37,58 @@ export function useInstallApp() {
 
     const handler = (e: Event) => {
       e.preventDefault();
-      setDeferredPrompt(e as BeforeInstallPromptEvent);
+      const promptEvent = e as BeforeInstallPromptEvent;
+      setDeferredPrompt(promptEvent);
+      
+      // Tentar instalação automática no Android
+      if (/android/.test(userAgent)) {
+        setTimeout(() => {
+          promptEvent.prompt().catch(err => {
+            console.log('Auto-install failed, showing manual instructions', err);
+          });
+        }, 3000);
+      }
     };
 
     window.addEventListener('beforeinstallprompt', handler);
 
-    // MOCK FOR DEMONSTRATION/TESTING: 
-    // In localhost development, we force the UI so the developer can see the exact layout.
-    const isLocalhost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
-    if (isLocalhost) {
-       setTimeout(() => {
-         setIsInstallable(true);
-         // Create a dummy prompt object just to show the green "Instalar Agora" button on localhost
-         if (!deferredPrompt && os !== 'ios') {
-           setDeferredPrompt({
-             prompt: async () => { console.log("Mock prompt triggered"); },
-             userChoice: Promise.resolve({ outcome: 'accepted' })
-           } as BeforeInstallPromptEvent);
-         }
-       }, 1500);
-    }
-
     return () => window.removeEventListener('beforeinstallprompt', handler);
-  }, [os, deferredPrompt]);
+  }, []);
 
   const handleInstallClick = async () => {
-    // If we have a prompt AND we are not on iOS, try native first
+    // Sempre mostrar o modal com instruções
+    setShowModal(true);
+    
+    // Se tiver prompt nativo E não for iOS, tentar instalação automática
     if (deferredPrompt && os !== 'ios') {
-      await triggerNativeInstall();
-    } else {
-      setShowModal(true);
+      try {
+        await deferredPrompt.prompt();
+        const { outcome } = await deferredPrompt.userChoice;
+        if (outcome === 'accepted') {
+          console.log('PWA instalado com sucesso!');
+          setShowModal(false);
+        }
+      } catch (e) {
+        console.log("Prompt automático falhou, mostrando instruções manuais", e);
+      }
     }
   };
 
   const triggerNativeInstall = async () => {
-    if (!deferredPrompt) return;
+    if (!deferredPrompt) {
+      console.log('Sem prompt nativo disponível');
+      return;
+    }
     try {
       await deferredPrompt.prompt();
       const { outcome } = await deferredPrompt.userChoice;
       if (outcome === 'accepted') {
-        setIsInstallable(false);
+        console.log('PWA instalado com sucesso!');
         setShowModal(false);
         setDeferredPrompt(null);
       }
     } catch (e) {
       console.error("Install prompt error", e);
-      setShowModal(true);
     }
   };
 
