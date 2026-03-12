@@ -22,9 +22,28 @@ export function InstallPWAButton() {
     // Não salvar no localStorage para que apareça novamente na próxima visita
   };
 
-  const handleInstall = () => {
-    handleInstallClick();
-    setIsVisible(false);
+  const handleInstall = async () => {
+    // Tentar chamar o prompt nativo diretamente
+    if (deferredPrompt) {
+      try {
+        await deferredPrompt.prompt();
+        const { outcome } = await deferredPrompt.userChoice;
+        
+        if (outcome === 'accepted') {
+          console.log('PWA instalado com sucesso!');
+          setIsVisible(false);
+        } else {
+          console.log('Usuário cancelou a instalação');
+        }
+      } catch (error) {
+        console.error('Erro ao tentar instalar:', error);
+        // Se falhar, mostrar modal com instruções
+        handleInstallClick();
+      }
+    } else {
+      // Se não tem prompt nativo disponível, mostrar modal com instruções
+      handleInstallClick();
+    }
   };
 
   if (!isInstallable) return null;
