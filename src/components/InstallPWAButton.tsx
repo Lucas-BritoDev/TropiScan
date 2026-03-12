@@ -23,26 +23,35 @@ export function InstallPWAButton() {
   };
 
   const handleInstall = async () => {
+    console.log('🔘 Botão PWA clicado');
+    console.log('📋 deferredPrompt disponível:', !!deferredPrompt);
+    
     // Tentar chamar o prompt nativo diretamente
     if (deferredPrompt) {
       try {
+        console.log('🚀 Tentando chamar prompt nativo...');
         await deferredPrompt.prompt();
         const { outcome } = await deferredPrompt.userChoice;
         
+        console.log('✅ Resultado da instalação:', outcome);
+        
         if (outcome === 'accepted') {
-          console.log('PWA instalado com sucesso!');
+          console.log('✅ PWA instalado com sucesso!');
           setIsVisible(false);
         } else {
-          console.log('Usuário cancelou a instalação');
+          console.log('❌ Usuário cancelou a instalação');
+          // Mostrar modal com instruções se cancelou
+          setShowModal(true);
         }
       } catch (error) {
-        console.error('Erro ao tentar instalar:', error);
+        console.error('❌ Erro ao tentar instalar:', error);
         // Se falhar, mostrar modal com instruções
-        handleInstallClick();
+        setShowModal(true);
       }
     } else {
       // Se não tem prompt nativo disponível, mostrar modal com instruções
-      handleInstallClick();
+      console.log('ℹ️ Prompt nativo não disponível, mostrando modal');
+      setShowModal(true);
     }
   };
 
@@ -181,6 +190,27 @@ export function InstallPWAButton() {
                   Acesse rapidamente pela tela inicial do seu dispositivo. 
                   Funciona offline e ocupa pouco espaço.
                 </p>
+
+                {/* Instruções manuais quando não há prompt nativo */}
+                {!deferredPrompt && (
+                  <div className="mb-6 p-4 bg-muted/50 rounded-lg text-left">
+                    <h3 className="font-semibold mb-3 text-foreground text-sm">Como instalar manualmente:</h3>
+                    <ol className="space-y-2 text-xs text-muted-foreground">
+                      <li className="flex items-start gap-2">
+                        <span className="font-bold text-foreground">1.</span>
+                        <span>Toque no menu do navegador (⋮ ou ⋯)</span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <span className="font-bold text-foreground">2.</span>
+                        <span>Selecione "Adicionar à tela inicial" ou "Instalar app"</span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <span className="font-bold text-foreground">3.</span>
+                        <span>Confirme a instalação</span>
+                      </li>
+                    </ol>
+                  </div>
+                )}
                 
                 <div className="flex gap-3">
                   <button
@@ -191,16 +221,25 @@ export function InstallPWAButton() {
                   </button>
                   
                   <button
-                    onClick={() => {
+                    onClick={async () => {
                       if (deferredPrompt) {
-                        triggerNativeInstall();
+                        try {
+                          await deferredPrompt.prompt();
+                          const { outcome } = await deferredPrompt.userChoice;
+                          if (outcome === 'accepted') {
+                            setShowModal(false);
+                            setIsVisible(false);
+                          }
+                        } catch (error) {
+                          console.error('Erro ao instalar:', error);
+                        }
+                      } else {
+                        setShowModal(false);
                       }
-                      setShowModal(false);
-                      setIsVisible(false);
                     }}
                     className="flex-1 bg-primary hover:bg-primary/90 text-primary-foreground px-4 py-2 rounded-lg font-medium transition-colors"
                   >
-                    Instalar
+                    {deferredPrompt ? 'Instalar' : 'Entendi'}
                   </button>
                 </div>
               </div>
