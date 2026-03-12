@@ -16,10 +16,14 @@ export default function Consent() {
   const [showFullTerm, setShowFullTerm] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
-  const { setConsent, audioEnabled, checkConsentValid, consentDate } = useTropiScanStore();
+  const { setConsent, audioEnabled, checkConsentValid, consentDate, selectedDisease } = useTropiScanStore();
   const { t } = useTranslation();
 
   const alreadyAccepted = checkConsentValid();
+
+  // Obter o nome da doença para o consentimento
+  const diseaseKey = selectedDisease || 'leishmaniose';
+  const consentKey = `consent.term_${diseaseKey}`;
 
   useEffect(() => { if (audioEnabled) speakText(t('audio.consent')); }, [audioEnabled, t]);
 
@@ -98,7 +102,7 @@ export default function Consent() {
           icon={Shield} 
         />
         <div ref={scrollRef} onScroll={handleScroll} className="glass-card h-64 overflow-y-auto p-5 text-sm leading-relaxed text-card-foreground">
-          <pre className="whitespace-pre-wrap font-sans">{t('consent.term')}</pre>
+          <pre className="whitespace-pre-wrap font-sans">{t(consentKey)}</pre>
         </div>
         {!scrolledToEnd && (
           <div className="flex flex-col items-center gap-1 text-muted-foreground">

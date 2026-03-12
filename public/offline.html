@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TropiScan - Offline</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      background: linear-gradient(135deg, #1a4d3a 0%, #2d7a5f 100%);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    .container {
+      text-align: center;
+      max-width: 500px;
+    }
+
+    .icon {
+      width: 80px;
+      height: 80px;
+      margin: 0 auto 30px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 40px;
+    }
+
+    h1 {
+      font-size: 32px;
+      margin-bottom: 16px;
+      font-weight: 700;
+    }
+
+    p {
+      font-size: 18px;
+      line-height: 1.6;
+      opacity: 0.9;
+      margin-bottom: 30px;
+    }
+
+    .button {
+      display: inline-block;
+      background: white;
+      color: #1a4d3a;
+      padding: 14px 32px;
+      border-radius: 12px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 16px;
+      transition: transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    .button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+    }
+
+    .button:active {
+      transform: translateY(0);
+    }
+
+    .features {
+      margin-top: 40px;
+      padding-top: 40px;
+      border-top: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .features h2 {
+      font-size: 20px;
+      margin-bottom: 20px;
+      opacity: 0.9;
+    }
+
+    .feature-list {
+      display: grid;
+      gap: 12px;
+      text-align: left;
+    }
+
+    .feature-item {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 12px 16px;
+      border-radius: 8px;
+      font-size: 14px;
+    }
+
+    .feature-item::before {
+      content: "✓ ";
+      font-weight: bold;
+      margin-right: 8px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="icon">📡</div>
+    
+    <h1>Você está offline</h1>
+    
+    <p>
+      Não foi possível conectar à internet. Algumas funcionalidades podem estar limitadas.
+    </p>
+
+    <button class="button" onclick="window.location.reload()">
+      Tentar Novamente
+    </button>
+
+    <div class="features">
+      <h2>Funcionalidades disponíveis offline:</h2>
+      <div class="feature-list">
+        <div class="feature-item">Visualizar histórico de triagens salvas</div>
+        <div class="feature-item">Acessar conteúdo educacional baixado</div>
+        <div class="feature-item">Navegar pela interface do aplicativo</div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Verificar conexão periodicamente
+    setInterval(() => {
+      if (navigator.onLine) {
+        window.location.reload();
+      }
+    }, 5000);
+
+    // Listener para quando voltar online
+    window.addEventListener('online', () => {
+      window.location.reload();
+    });
+  </script>
+</body>
+</html>

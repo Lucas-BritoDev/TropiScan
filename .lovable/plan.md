@@ -18,7 +18,7 @@ Criar uma landing page editorial elegante na rota `/` (atual Home vira `/app`). 
 
 | Rota Atual | Nova Rota | Descricao |
 |------------|-----------|-----------|
-| `/` (Home) | `/app` | Tela inicial do PWA |
+| `/` (Home) | `/app` | Tela inicial da aplicação |
 | — | `/` | Landing Page nova |
 | `/consentimento` | `/app/consentimento` | Manter (sem mudanca de path por ora, o `/app` apenas aponta para Home) |
 
@@ -112,7 +112,7 @@ Um unico componente grande (ou com sub-componentes inline) que renderiza as 8 se
 - `useState` para navbar scroll state (transparent → solid)
 - `useEffect` com scroll listener para navbar
 - Smooth scroll para links ancora
-- Nao mostra os toggles flutuantes (DarkMode, Audio, Language) — sao do PWA, nao da landing
+- Nao mostra os toggles flutuantes (DarkMode, Audio, Language) — sao da aplicação, nao da landing
 - A landing page tem seu proprio footer e navbar
 
 ### Counter Animation

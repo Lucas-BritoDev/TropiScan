@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gerador de Ícones TropiScan PWA</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: linear-gradient(135deg, #1a4d3a 0%, #2d7a5f 100%);
+      color: white;
+      padding: 40px 20px;
+      min-height: 100vh;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    h1 {
+      font-size: 32px;
+      margin-bottom: 10px;
+      text-align: center;
+    }
+
+    .subtitle {
+      text-align: center;
+      opacity: 0.9;
+      margin-bottom: 40px;
+    }
+
+    .upload-section {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      padding: 30px;
+      margin-bottom: 30px;
+      text-align: center;
+    }
+
+    .upload-label {
+      display: inline-block;
+      background: white;
+      color: #1a4d3a;
+      padding: 14px 32px;
+      border-radius: 12px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: transform 0.2s;
+    }
+
+    .upload-label:hover {
+      transform: translateY(-2px);
+    }
+
+    input[type="file"] {
+      display: none;
+    }
+
+    .preview-section {
+      display: none;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      padding: 30px;
+      margin-bottom: 30px;
+    }
+
+    .preview-section.active {
+      display: block;
+    }
+
+    .preview-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+      margin-top: 20px;
+    }
+
+    .preview-item {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 12px;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .preview-item canvas {
+      width: 100%;
+      height: auto;
+      border-radius: 8px;
+      background: white;
+      margin-bottom: 10px;
+    }
+
+    .preview-item h3 {
+      font-size: 16px;
+      margin-bottom: 10px;
+    }
+
+    .download-btn {
+      background: #1a4d3a;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: background 0.2s;
+      width: 100%;
+    }
+
+    .download-btn:hover {
+      background: #0f3a28;
+    }
+
+    .instructions {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      padding: 30px;
+      line-height: 1.8;
+    }
+
+    .instructions h2 {
+      margin-bottom: 20px;
+    }
+
+    .instructions ol {
+      margin-left: 20px;
+    }
+
+    .instructions li {
+      margin-bottom: 10px;
+    }
+
+    .success-message {
+      background: rgba(76, 175, 80, 0.2);
+      border: 2px solid rgba(76, 175, 80, 0.5);
+      border-radius: 12px;
+      padding: 20px;
+      margin-top: 20px;
+      text-align: center;
+      display: none;
+    }
+
+    .success-message.active {
+      display: block;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🌿 Gerador de Ícones TropiScan PWA</h1>
+    <p class="subtitle">Gere ícones otimizados para o Progressive Web App</p>
+
+    <div class="upload-section">
+      <h2 style="margin-bottom: 20px;">1. Selecione a imagem do TropiScan</h2>
+      <label for="imageInput" class="upload-label">
+        📁 Escolher Imagem (tropiscan.jpeg)
+      </label>
+      <input type="file" id="imageInput" accept="image/*">
+      <p style="margin-top: 15px; opacity: 0.8; font-size: 14px;">
+        Recomendado: Imagem quadrada, mínimo 512x512px
+      </p>
+    </div>
+
+    <div class="preview-section" id="previewSection">
+      <h2 style="margin-bottom: 20px;">2. Pré-visualização e Download</h2>
+      <div class="preview-grid" id="previewGrid"></div>
+      <div class="success-message" id="successMessage">
+        ✅ Ícones gerados com sucesso! Baixe cada um e salve na pasta <code>public/</code>
+      </div>
+    </div>
+
+    <div class="instructions">
+      <h2>📋 Instruções</h2>
+      <ol>
+        <li>Clique em "Escolher Imagem" e selecione o arquivo <strong>tropiscan.jpeg</strong></li>
+        <li>Os ícones serão gerados automaticamente nos tamanhos necessários</li>
+        <li>Clique em "Baixar" em cada ícone para salvá-lo</li>
+        <li>Salve os arquivos na pasta <code>public/</code> do projeto:
+          <ul style="margin-top: 10px;">
+            <li><code>favicon.ico</code> - Ícone da aba do navegador (32x32)</li>
+            <li><code>icon-192.png</code> - Ícone PWA pequeno (192x192)</li>
+            <li><code>icon-512.png</code> - Ícone PWA grande (512x512)</li>
+          </ul>
+        </li>
+        <li>Recarregue o aplicativo para ver os novos ícones</li>
+      </ol>
+    </div>
+  </div>
+
+  <script>
+    const imageInput = document.getElementById('imageInput');
+    const previewSection = document.getElementById('previewSection');
+    const previewGrid = document.getElementById('previewGrid');
+    const successMessage = document.getElementById('successMessage');
+
+    const sizes = [
+      { name: 'favicon.ico', size: 32, type: 'image/x-icon' },
+      { name: 'icon-192.png', size: 192, type: 'image/png' },
+      { name: 'icon-512.png', size: 512, type: 'image/png' }
+    ];
+
+    imageInput.addEventListener('change', (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        const img = new Image();
+        img.onload = () => {
+          generateIcons(img);
+        };
+        img.src = event.target.result;
+      };
+      reader.readAsDataURL(file);
+    });
+
+    function generateIcons(img) {
+      previewGrid.innerHTML = '';
+      previewSection.classList.add('active');
+
+      sizes.forEach(({ name, size, type }) => {
+        const canvas = document.createElement('canvas');
+        canvas.width = size;
+        canvas.height = size;
+        const ctx = canvas.getContext('2d');
+
+        // Desenhar imagem centralizada e redimensionada
+        const scale = Math.min(size / img.width, size / img.height);
+        const x = (size - img.width * scale) / 2;
+        const y = (size - img.height * scale) / 2;
+        
+        ctx.fillStyle = '#1a4d3a';
+        ctx.fillRect(0, 0, size, size);
+        ctx.drawImage(img, x, y, img.width * scale, img.height * scale);
+
+        // Criar elemento de preview
+        const previewItem = document.createElement('div');
+        previewItem.className = 'preview-item';
+        previewItem.innerHTML = `
+          <canvas width="${size}" height="${size}"></canvas>
+          <h3>${name}</h3>
+          <p style="opacity: 0.8; font-size: 14px; margin-bottom: 10px;">${size}x${size}px</p>
+          <button class="download-btn" onclick="downloadIcon('${name}', '${canvas.toDataURL(type)}')">
+            ⬇️ Baixar ${name}
+          </button>
+        `;
+
+        const previewCanvas = previewItem.querySelector('canvas');
+        const previewCtx = previewCanvas.getContext('2d');
+        previewCtx.drawImage(canvas, 0, 0);
+
+        previewGrid.appendChild(previewItem);
+      });
+
+      successMessage.classList.add('active');
+    }
+
+    function downloadIcon(filename, dataUrl) {
+      const link = document.createElement('a');
+      link.download = filename;
+      link.href = dataUrl;
+      link.click();
+    }
+
+    // Tornar função global
+    window.downloadIcon = downloadIcon;
+  </script>
+</body>
+</html>

@@ -8,9 +8,9 @@ import { BrowserRouter, Routes, Route, useLocation, useNavigate } from "react-ro
 import { AnimatePresence } from "framer-motion";
 import { ResponsiveControls } from "@/components/ResponsiveControls";
 import { InstallPWAButton } from "@/components/InstallPWAButton";
+import { PWAUpdatePrompt } from "@/components/PWAUpdatePrompt";
 import { VLibrasWidget } from "@/components/VLibrasWidget";
 import { OfflineBanner } from "@/components/OfflineBanner";
-import { InstallPrompt } from "@/components/InstallPrompt";
 import LandingPage from "./pages/LandingPage";
 import DiseaseSelection from "./pages/DiseaseSelection";
 import Home from "./pages/Home";
@@ -55,6 +55,7 @@ function AppShell() {
       <OfflineBanner />
       {!isLanding && <ResponsiveControls />}
       <InstallPWAButton />
+      <PWAUpdatePrompt />
       <AnimatePresence mode="wait">
         <Routes location={location} key={location.pathname}>
           <Route path="/" element={<LandingPage />} />
