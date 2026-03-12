@@ -4,7 +4,7 @@ import { Download, X } from 'lucide-react';
 import { useInstallApp } from '@/hooks/useInstallApp';
 
 export function InstallPWAButton() {
-  const { isInstallable, showModal, setShowModal, handleInstallClick, triggerNativeInstall, deferredPrompt } = useInstallApp();
+  const { isInstallable, showModal, setShowModal, handleInstallClick, triggerNativeInstall, deferredPrompt, setDeferredPrompt } = useInstallApp();
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
@@ -23,9 +23,32 @@ export function InstallPWAButton() {
     }, 30000);
   };
 
-  const handleInstall = () => {
-    handleInstallClick();
-    // NÃO esconder o botão, deixar o modal aberto
+  const handleInstall = async () => {
+    // Tentar instalação direta quando clicar no botão flutuante
+    if (deferredPrompt) {
+      try {
+        // Chamar o prompt nativo diretamente
+        await deferredPrompt.prompt();
+        const { outcome } = await deferredPrompt.userChoice;
+        
+        if (outcome === 'accepted') {
+          console.log('PWA instalado com sucesso!');
+          setIsVisible(false);
+          setDeferredPrompt(null);
+        } else {
+          console.log('Usuário recusou a instalação');
+          // Se recusou, mostrar modal com instruções
+          setShowModal(true);
+        }
+      } catch (error) {
+        console.error('Erro ao instalar:', error);
+        // Se der erro, mostrar modal com instruções
+        setShowModal(true);
+      }
+    } else {
+      // Se não tem prompt nativo, mostrar modal com instruções
+      handleInstallClick();
+    }
   };
 
   // Sempre renderizar, não verificar isInstallable
@@ -155,70 +178,44 @@ export function InstallPWAButton() {
                 </div>
                 
                 <h2 className="text-xl font-bold text-foreground mb-2">
-                  Instalar TropiScan
+                  Como Instalar TropiScan
                 </h2>
                 
                 <p className="text-muted-foreground mb-6">
-                  Acesse rapidamente pela tela inicial do seu dispositivo. 
-                  Funciona offline e ocupa pouco espaço.
+                  Siga as instruções abaixo para instalar o aplicativo no seu dispositivo.
                 </p>
 
-                {/* Instruções baseadas na plataforma */}
-                {!deferredPrompt && (
-                  <div className="mb-6 p-4 bg-muted/50 rounded-lg text-left">
-                    <h3 className="font-semibold mb-3 text-foreground">Como instalar:</h3>
-                    <ol className="space-y-2 text-sm text-muted-foreground">
-                      <li className="flex items-start gap-2">
-                        <span className="font-bold text-foreground">1.</span>
-                        <span>Toque no menu do navegador (três pontos ⋮)</span>
-                      </li>
-                      <li className="flex items-start gap-2">
-                        <span className="font-bold text-foreground">2.</span>
-                        <span>Selecione "Adicionar à tela inicial" ou "Instalar app"</span>
-                      </li>
-                      <li className="flex items-start gap-2">
-                        <span className="font-bold text-foreground">3.</span>
-                        <span>Confirme a instalação</span>
-                      </li>
-                    </ol>
-                  </div>
-                )}
-                
-                <div className="flex gap-3">
-                  <button
-                    onClick={() => setShowModal(false)}
-                    className="flex-1 px-4 py-2 text-muted-foreground hover:text-foreground transition-colors"
-                  >
-                    Agora não
-                  </button>
+                {/* Instruções manuais */}
+                <div className="mb-6 p-4 bg-muted/50 rounded-lg text-left">
+                  <h3 className="font-semibold mb-3 text-foreground">Instruções de instalação:</h3>
+                  <ol className="space-y-2 text-sm text-muted-foreground">
+                    <li className="flex items-start gap-2">
+                      <span className="font-bold text-foreground">1.</span>
+                      <span>Toque no menu do navegador (três pontos ⋮ ou ⋯)</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="font-bold text-foreground">2.</span>
+                      <span>Selecione "Adicionar à tela inicial" ou "Instalar app"</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="font-bold text-foreground">3.</span>
+                      <span>Confirme a instalação tocando em "Adicionar" ou "Instalar"</span>
+                    </li>
+                  </ol>
                   
-                  <button
-                    onClick={async () => {
-                      if (deferredPrompt) {
-                        try {
-                          await deferredPrompt.prompt();
-                          const { outcome } = await deferredPrompt.userChoice;
-                          if (outcome === 'accepted') {
-                            console.log('PWA instalado com sucesso!');
-                            setShowModal(false);
-                          } else {
-                            console.log('Usuário recusou a instalação');
-                          }
-                        } catch (error) {
-                          console.error('Erro ao instalar:', error);
-                          alert('Não foi possível instalar automaticamente. Use as instruções manuais acima.');
-                        }
-                      } else {
-                        // Se não há prompt nativo, fechar modal (usuário já viu as instruções)
-                        setShowModal(false);
-                        alert('Use as instruções acima para instalar o aplicativo manualmente.');
-                      }
-                    }}
-                    className="flex-1 bg-primary hover:bg-primary/90 text-primary-foreground px-4 py-2 rounded-lg font-medium transition-colors"
-                  >
-                    {deferredPrompt ? 'Instalar' : 'Entendi'}
-                  </button>
+                  <div className="mt-4 p-3 bg-primary/10 rounded-lg">
+                    <p className="text-xs text-foreground">
+                      <strong>💡 Dica:</strong> No iPhone, use o botão Compartilhar (□↑) e selecione "Adicionar à Tela de Início"
+                    </p>
+                  </div>
                 </div>
+                
+                <button
+                  onClick={() => setShowModal(false)}
+                  className="w-full bg-primary hover:bg-primary/90 text-primary-foreground px-4 py-2 rounded-lg font-medium transition-colors"
+                >
+                  Entendi
+                </button>
               </div>
             </motion.div>
           </>

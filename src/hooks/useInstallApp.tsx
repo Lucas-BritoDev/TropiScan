@@ -39,12 +39,19 @@ export function useInstallApp() {
       e.preventDefault();
       const promptEvent = e as BeforeInstallPromptEvent;
       setDeferredPrompt(promptEvent);
-      console.log('beforeinstallprompt event captured');
+      console.log('✅ beforeinstallprompt event captured - PWA can be installed');
     };
 
     window.addEventListener('beforeinstallprompt', handler);
 
-    return () => window.removeEventListener('beforeinstallprompt', handler);
+    // Log para debug
+    console.log('🔍 PWA Install Hook initialized');
+    console.log('📱 Device OS:', userAgent.includes('android') ? 'Android' : userAgent.includes('iphone') ? 'iOS' : 'Desktop');
+
+    return () => {
+      window.removeEventListener('beforeinstallprompt', handler);
+      console.log('🔌 PWA Install Hook cleanup');
+    };
   }, []);
 
   const handleInstallClick = async () => {
@@ -84,7 +91,7 @@ export function useInstallApp() {
     }
   };
 
-  return { isInstallable, showModal, setShowModal, os, handleInstallClick, triggerNativeInstall, deferredPrompt };
+  return { isInstallable, showModal, setShowModal, os, handleInstallClick, triggerNativeInstall, deferredPrompt, setDeferredPrompt };
 }
 
 export function InstallAppModal({
